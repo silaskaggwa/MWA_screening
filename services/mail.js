@@ -18,9 +18,10 @@ const create = (options) => {
 
 const sendInvitationEmail = (name, email, token) => {
 	mailOptions.to = email;
-	mailOptions.subject = "Screening Test Invitation";
+	mailOptions.subject = "Screening Test Invitation "+Math.floor(Math.random()*100);
 	mailOptions.html = `
 		<p>Dear ${name}, </p>
+		<p>*Invitation link can only be used once!</p>
 		<a href="${config.host+'/exam/?token='+token}">Click here to start test</a>
 	`;
 	create(mailOptions);

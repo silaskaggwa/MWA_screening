@@ -20,21 +20,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-//app.use(express.json());
-//app.use(express.urlencoded({ extended: false }));
-//app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/exam', require('./middleware/authentication').authenticated);
-//const examAuth = require('./middleware/authentication').authenticated;
-
 app.use('/staff', staffRouter);
+app.use('/exam', require('./middleware/authentication').authenticated);
 app.use('/exam', examRouter);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
