@@ -6,6 +6,14 @@ const createInvitation = (data) => {
 }
 const getInvitationById = (id) => Invitation.findById(id);
 
+const generateQuestions = () => {
+    return [
+        {_id: 55, question: 'Question one', duration: 0},
+        {_id: 56, question: 'Question two', duration: 0},
+        {_id: 57, question: 'Question three', duration: 0}
+    ];
+}
+
 const startExam = (id) => {
     return new Promise((resolve, reject) => {
         Invitation.findOne({_id: id, status: config.invitation_status.SENT}, (err, invitation) => {
@@ -29,4 +37,4 @@ const startExam = (id) => {
     });
 }
 
-module.exports = {createInvitation, getInvitationById, startExam};
+module.exports = {createInvitation, getInvitationById, startExam, generateQuestions};

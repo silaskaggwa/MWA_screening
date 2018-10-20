@@ -10,11 +10,7 @@ router.get('/invite', function(req, res, next) {
     status: config.invitation_status.SENT,
     name: 'Silas',
     email: 'silakag@gmail.com',
-    questions: [
-      {_id: 55, question: 'Question one', duration: 0},
-      {_id: 56, question: 'Question two', duration: 0},
-      {_id: 57, question: 'Question three', duration: 0}
-    ]
+    questions: ExamService.generateQuestions()
   };
   ExamService.createInvitation(data)
     .then(invitation => {
