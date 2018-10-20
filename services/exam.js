@@ -19,7 +19,7 @@ const startExam = (id) => {
         Invitation.findOne({_id: id, status: config.invitation_status.SENT}, (err, invitation) => {
             if(err) throw err;
             if(invitation){
-                invitation.status = config.invitation_status.STARTED;
+                //invitation.status = config.invitation_status.STARTED;
                 invitation.started_at = new Date();
                 invitation.shd_answer_by = new Date(invitation.started_at.getTime() + config.exam.duration*60000);
                 invitation.save(err => {
