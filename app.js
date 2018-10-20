@@ -7,6 +7,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('./config');
 
+const invitationAuth = require('./middleware/authentication').authenticated;
 const staffRouter = require('./routes/staff');
 const examRouter = require('./routes/exam');
 
@@ -26,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
 app.use('/staff', staffRouter);
-app.use('/exam', require('./middleware/authentication').authenticated);
+app.use('/exam', invitationAuth);
 app.use('/exam', examRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));

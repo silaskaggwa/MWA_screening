@@ -3,11 +3,12 @@ const router = express.Router();
 const AuthService = require('../services/authentication');
 const MailService = require('../services/mail');
 const ExamService = require('../services/exam');
+const config = require('../config');
 
 router.get('/invite', function(req, res, next) {
   const data = {
-    status: 'sent',
-    name: 'Silas K',
+    status: config.invitation_status.SENT,
+    name: 'Silas',
     email: 'silakag@gmail.com',
     questions: [
       {_id: 55, question: 'Question one', duration: 0},

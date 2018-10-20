@@ -14,4 +14,14 @@ module.exports = {
 			pass: process.env.MAIL_PASS || 'tigist_alem_silas'
 		}
 	},
+	exam: {
+		duration: process.env.EXAM_DURATION || 120
+	},
+	invitation_status: {
+		SENT: 'sent',
+		STARTED: 'started',
+		ANSWERED: 'answered', 
+		PASS: 'pass',
+		FAIL: 'fail'
+	} 
 };
