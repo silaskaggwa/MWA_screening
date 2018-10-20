@@ -13,10 +13,10 @@ const AssignedQuestionSchema = new mongoose.Schema({
 });
 
 const InvitationSchema = new mongoose.Schema({
-    status: {type: String, required: true, enum: ['sent', 'answered', 'pass', 'fail']},
+    status: {type: String, required: true, enum: ['sent', 'started', 'answered', 'pass', 'fail']},
+    name: {type: String, required: true},
     email: {type: String, required: true},
     questions: [AssignedQuestionSchema],
-    active: Boolean,
     started_at: Date,
     ended_at: Date,
     time_off: Number,
