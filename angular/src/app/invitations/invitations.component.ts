@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InvitationsService } from '../invitations.service';
 
 @Component({
   selector: 'invitations',
@@ -7,17 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvitationsComponent{
 
-  studentInfo = [
-    {name: "Alem Embiale", email: "alemwatch@gmail.com"},
-    {name: "Silas Kaggwa", email: "silas@gmail.com"},
-    {name: "Tigist Tadesse", email: "tigist@gmail.com"},
-    
-  ];
+  studentInfo;
+  addApplicant: boolean = false;
 
-  addApplicant(){
-    this.studentInfo.push({name: "Feven Hailu", email: "feven@yahoo.com"});
-    
+  constructor(private service: InvitationsService){
+    this.studentInfo = service.getStudentInfo();
   }
 
-  
+ 
+  add(){
+    this.addApplicant = true;
+    
+  }
+  removeApplicant(){
+    console.log("removing...");
+  }
+
+  send(){
+    console.log("sending...");
+  }
+
 }
+
+

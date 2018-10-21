@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { P404Component } from './p404.component';
 import { InvitationsComponent } from './invitations/invitations.component';
+import { InvitationsService } from './invitations.service';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
@@ -26,7 +27,9 @@ const APP_ROUTES: Routes = [
     RouterModule.forRoot(APP_ROUTES),
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    InvitationsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,18 +1,24 @@
 <form>
   <div class="form-group">
     <h2>Invitations</h2>
-    <table [(ngModel)] ="studentInfo" class="table table-striped" name="contactMethod" id="contactMethod">
+    <table [(ngModel)] ="studentInfo" class="table table-striped">
       <tr>
         <th  scope="col">Name</th>
         <th  scope="col">Email</th>
         <th  scope="col">Send Invitation</th>
+        <th  scope="col">Remove Applicant</th>
       </tr>
       <tr *ngFor="let student of studentInfo">
         <td>{{ student.name }}</td>
         <td>{{ student.email }}</td>
-        <td><button class="btn btn-primary">Send</button></td>
+        <td><button class="btn btn-primary" (click)="send()">Send</button></td>
+        <td><button class="btn btn-primary" (click)="removeApplicant()">Remove</button></td>
       </tr>
     </table>
-    <button class="btn btn-primary" (click)="addApplicant()">Add Applicant</button>
+    <button class="btn btn-primary" (click)="add()">Add Applicant</button>
+    <div *ngIf="addApplicant">
+      <input type="text" [(ngModel)] = "student.name" class="form-control">
+      <input type="text" [(ngModel)]  = "student.email" class="form-control">
+    </div>
 </div>
 </form>
