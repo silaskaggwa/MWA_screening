@@ -5,10 +5,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { P404Component } from './p404.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MyMaterialModule } from  './material.module';
+import { Services } from '@angular/core/src/view';
+
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
   {path: 'exam', loadChildren: './exam/exam.module#ExamModule'},
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
   {path: '404', component: P404Component},
   {path: '**', redirectTo: '404'}
 ];
@@ -16,12 +21,15 @@ const APP_ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    
     HomeComponent,
     P404Component
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(APP_ROUTES)
+    MyMaterialModule,
+    RouterModule.forRoot(APP_ROUTES),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
