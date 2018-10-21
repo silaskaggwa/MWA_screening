@@ -8,9 +8,9 @@ const getInvitationById = (id) => Invitation.findById(id);
 
 const generateQuestions = () => {
     return [
-        {_id: 55, question: 'Question one', duration: 0},
-        {_id: 56, question: 'Question two', duration: 0},
-        {_id: 57, question: 'Question three', duration: 0}
+        {_id: 55, question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ', duration: 0},
+        {_id: 56, question: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', duration: 0},
+        {_id: 57, question: 'Facilisis volutpat est velit egestas dui id. Eget magna fermentum iaculis eu non. Ultrices in iaculis nunc sed augue lacus viverra vitae. Eget egestas purus viverra accumsan in nisl nisi scelerisque eu. Fusce ut placerat orci nulla pellentesque dignissim enim.', duration: 0}
     ];
 }
 
