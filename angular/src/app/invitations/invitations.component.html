@@ -1,24 +1,32 @@
 <form>
   <div class="form-group">
     <h2>Invitations</h2>
-    <table [(ngModel)] ="studentInfo" class="table table-striped">
+    <table mat-table [(ngModel)] ="studentInfo" class="table table-striped">
       <tr>
         <th  scope="col">Name</th>
         <th  scope="col">Email</th>
-        <th  scope="col">Send Invitation</th>
-        <th  scope="col">Remove Applicant</th>
+        <th  scope="col">Status</th>
+        
       </tr>
       <tr *ngFor="let student of studentInfo">
         <td>{{ student.name }}</td>
         <td>{{ student.email }}</td>
-        <td><button class="btn btn-primary" (click)="send()">Send</button></td>
-        <td><button class="btn btn-primary" (click)="removeApplicant()">Remove</button></td>
+        <td>{{ "Sent" }}</td>
+        
+        
       </tr>
     </table>
-    <button class="btn btn-primary" (click)="add()">Add Applicant</button>
-    <div *ngIf="addApplicant">
-      <input type="text" [(ngModel)] = "student.name" class="form-control">
-      <input type="text" [(ngModel)]  = "student.email" class="form-control">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="add()">Send New Invitation</button>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <input type="text" (onKeyup) = "studentInfo.name" class="form-control">
+            <input type="text" (onKeyup)  = "studentInfo.name" class="form-control">
+   
     </div>
+    </div>
+    <!-- <div *ngIf="addApplicant">
+      <input type="text" (onKeyup) = "studentInfo.name" class="form-control">
+      <input type="text" (onKeyup)  = "studentInfo.name" class="form-control">
+    </div> -->
 </div>
 </form>

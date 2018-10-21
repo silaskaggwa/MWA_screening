@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, NgModule } from '@angular/core';
 import { InvitationsService } from '../invitations.service';
+
 
 @Component({
   selector: 'invitations',
@@ -7,8 +8,8 @@ import { InvitationsService } from '../invitations.service';
   styleUrls: ['./invitations.component.css']
 })
 export class InvitationsComponent{
-
-  studentInfo;
+  
+  @Input()studentInfo;
   addApplicant: boolean = false;
 
   constructor(private service: InvitationsService){

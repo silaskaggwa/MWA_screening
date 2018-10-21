@@ -7,6 +7,8 @@ import { HomeComponent } from './home.component';
 import { P404Component } from './p404.component';
 import { InvitationsComponent } from './invitations/invitations.component';
 import { InvitationsService } from './invitations.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule,MatToolbarModule} from  '@angular/material';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
@@ -23,9 +25,11 @@ const APP_ROUTES: Routes = [
     InvitationsComponent
   ],
   imports: [
+    MatButtonModule,MatToolbarModule,
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     InvitationsService
