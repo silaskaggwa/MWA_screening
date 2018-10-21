@@ -1,0 +1,18 @@
+<form>
+  <div class="form-group">
+    <h2>Invitations</h2>
+    <table [(ngModel)] ="studentInfo" class="table table-striped" name="contactMethod" id="contactMethod">
+      <tr>
+        <th  scope="col">Name</th>
+        <th  scope="col">Email</th>
+        <th  scope="col">Send Invitation</th>
+      </tr>
+      <tr *ngFor="let student of studentInfo">
+        <td>{{ student.name }}</td>
+        <td>{{ student.email }}</td>
+        <td><button class="btn btn-primary">Send</button></td>
+      </tr>
+    </table>
+    <button class="btn btn-primary" (click)="addApplicant()">Add Applicant</button>
+</div>
+</form>
