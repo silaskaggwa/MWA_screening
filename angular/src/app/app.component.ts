@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
     <h2>TAS SCREENING</h2>
     <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <!--  <span>HOME</span> -->
      <a mat-button routerLink="/home">HOME</a>
      <a mat-button routerLink="/admin">Register User</a>
      <span class="spacer"></span>

@@ -1,8 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-//const UserService = require('../services/exam');
+import {UserService} from './user.service'
 
-@Component({
+
+
+export interface PeriodicElement {
+  name: string;
+  email: string;
+  role: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Tigist', email:"tigist@gmail.com", role: 'Admin'},
+  { name: 'Silas', email: "tigist@gmail.com", role: 'Admin-Staff'},
+  { name: 'Alem', email: "tigist@gmail.com", role: 'Admin'},
+  { name: 'Tigist', email: "tigist@gmail.com", role: 'Admin'},
+  { name: 'Alem', email: "tigist@gmail.com", role: 'Admin'}
+];
+ @Component({
   selector: 'admin',
   template: `
   <mat-toolbar>
@@ -25,27 +40,65 @@ import { NgForm } from '@angular/forms';
          </mat-form-field>     
    
    <mat-card-actions>
-      <button mat-raised-button color="primary">SAVE</button>
+      <button mat-raised-button (click)="openDialog()" color="primary" >SAVE</button>
+      <button mat-icon-button>
+        <mat-icon aria-label="Example icon-button with a heart icon" >favorite</mat-icon>
+      </button>
    </mat-card-actions>
   </form>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+<!-- Name Column -->
+<ng-container matColumnDef="name">
+  <th mat-header-cell *matHeaderCellDef> Name </th>
+  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+</ng-container>
+
+<!-- Email Column -->
+<ng-container matColumnDef="email">
+  <th mat-header-cell *matHeaderCellDef> Email </th>
+  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+</ng-container>
+
+<!-- Status Column -->
+<ng-container matColumnDef="role">
+  <th mat-header-cell *matHeaderCellDef> Role </th>
+  <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+
   </mat-card-content>
   </mat-card>
   `,
-  styles: []
+  styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+
+ 
+  constructor(private userService: UserService) { 
+  
+  }
 
   ngOnInit() {
   }
   arr: any[]=[];  
 
+  
   createUser(form : NgForm) {
     this.arr = form.value
+    this.userService.createUser('hi');
     console.log('array', this.arr);
     console.log('value', JSON.stringify(form.value))
-   
+    
     
   }
+  displayedColumns: string[] = [ 'name', 'email', 'role'];
+  dataSource = ELEMENT_DATA;
 }

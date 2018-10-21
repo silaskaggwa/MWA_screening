@@ -5,6 +5,7 @@ import { AdminGuard } from './admin.guard';
 import { RouterModule } from '@angular/router';
 import { MyMaterialModule } from  '../material.module';
 
+
 export const ADMIN_ROUTES = [
   {path:'', component: AdminComponent, canActivate: [ AdminGuard ]}
 ];
