@@ -14,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgReduxModule, NgRedux } from '@angular-redux/store';
 
 import { rootReducer, IAppState, INITIAL_STATE } from './redux/exam.store';
-import { ExamActions } from './redux/exam.actions';
 
 
 export const EXAM_ROUTES = [
