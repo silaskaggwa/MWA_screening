@@ -5,8 +5,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { P404Component } from './p404.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';

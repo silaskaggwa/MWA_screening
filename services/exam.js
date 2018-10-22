@@ -4,6 +4,16 @@ const config = require('../config');
 const createInvitation = (data) => {
     return new Invitation(data).save();
 }
+
+const packageQuestion = (data) => {
+    return {
+        _id: data._id,
+        question: data.question,
+        duration: data.duration,
+        last_answer: (data.progress && data.progress.length > 0)  ? data.progress[data.progress.length - 1].text : ''
+    };
+}
+
 const getInvitationById = (id) => Invitation.findById(id);
 
 const generateQuestions = () => {
@@ -22,6 +32,8 @@ const startExam = (id) => {
                 //invitation.status = config.invitation_status.STARTED;
                 invitation.started_at = new Date();
                 invitation.shd_answer_by = new Date(invitation.started_at.getTime() + config.exam.duration*60000);
+                invitation.time_used = 0;
+                invitation.time_away = 0;
                 invitation.save(err => {
                     if(err) throw err;
                     resolve({
@@ -49,7 +61,9 @@ const addProgress = (id, data) => {
             {
                 $set: {
                     time_away: data.time_away,
-                    status:  theStatus
+                    time_used: data.time_used,
+                    status:  theStatus,
+                    'questions.$.duration': data.qn_duration
                 },
                 $push: {
                     'questions.$.progress': {text: data.snapshot, timeStamp: new Date()}
@@ -61,4 +75,4 @@ const addProgress = (id, data) => {
     });
 }
 
-module.exports = {createInvitation, getInvitationById, startExam, generateQuestions, addProgress};
+module.exports = {createInvitation, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
