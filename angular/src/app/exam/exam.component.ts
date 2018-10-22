@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExamService } from './exam.service';
 import { SET_INVITATION_ID } from './redux/exam.actions';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ interface Exam {
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit {
+export class ExamComponent implements OnInit, OnDestroy {
 
   questions = [];
   private subscription: Subscription;

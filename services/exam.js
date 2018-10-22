@@ -37,4 +37,28 @@ const startExam = (id) => {
     });
 }
 
-module.exports = {createInvitation, getInvitationById, startExam, generateQuestions};
+const addProgress = (id, data) => {
+    //console.log(id+' - progress>>', data);
+    let theStatus = config.invitation_status.STARTED
+    if(data.submit){
+        theStatus = config.invitation_status.ANSWERED;
+    }
+    return new Promise((resolve, reject) => {
+        Invitation.updateOne(
+            {_id: id, 'questions._id': data.qn_id}, 
+            {
+                $set: {
+                    time_away: data.time_away,
+                    status:  theStatus
+                },
+                $push: {
+                    'questions.$.progress': {text: data.snapshot, timeStamp: new Date()}
+                }
+            }, (err, info) => {
+                if(err) throw err;
+                resolve(info);
+            });
+    });
+}
+
+module.exports = {createInvitation, getInvitationById, startExam, generateQuestions, addProgress};

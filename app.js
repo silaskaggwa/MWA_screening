@@ -35,18 +35,23 @@ const corsOptions = {
   },
   credentials: true
 }
-app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
-app.use('/staff', staffRouter);
 app.use('/exam', invitationAuth);
-app.use('/exam', (req, res, next) => {
+app.use('/exam', examRouter);
+
+app.use('/staff', staffRouter);
+
+app.use('/progress', cors(corsOptions));
+app.use('/progress', invitationAuth);
+app.use('/progress', (req, res, next) => {
   if(!req.user) return res.status(401).end('Unauthorized');
   next();
 });
-app.use('/exam', examRouter);
+app.use('/progress', examRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgReduxModule, NgRedux } from '@angular-redux/store';
 
 import { rootReducer, IAppState, INITIAL_STATE } from './redux/exam.store';
+import { ExamService } from './exam.service';
 
 
 export const EXAM_ROUTES = [
@@ -38,6 +39,7 @@ export const EXAM_ROUTES = [
     ExamComponent,
     QuestionComponent
   ],
+  providers: [ExamService],
   bootstrap: [ExamComponent]
 })
 export class ExamModule { 

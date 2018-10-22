@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms'
 import { ExamService } from './exam.service';
 
 interface Question {
-  id: string,
+  _id: string,
   question: string,
   duration: number
 }
@@ -29,8 +29,12 @@ export class QuestionComponent implements OnInit {
     this.answer.valueChanges
       .pipe(debounceTime(500))
       .subscribe(snapshot => {
-        console.log(">>>>", snapshot);
-        this.examService.postSnapshot(this.question.id, snapshot);
+        console.log("qn_id>>", this.question._id);
+        this.examService.postSnapshot(this.question._id, snapshot)
+          .subscribe(
+            response => { console.log(response)},
+            error => console.log(error)
+          )
       });
   }
 }
