@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('./config');
+const cors = require('cors');
 
 const invitationAuth = require('./middleware/authentication').authenticated;
 const staffRouter = require('./routes/staff');
@@ -26,7 +27,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
+app.use('/staff', cors());
 app.use('/staff', staffRouter);
+
 app.use('/exam', invitationAuth);
 app.use('/exam', examRouter);
 

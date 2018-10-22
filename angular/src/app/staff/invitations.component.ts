@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { InvitationsService } from '../invitations.service';
+import { InvitationsService } from './invitations.service';
 import { Subscription } from 'rxjs';
 
 interface studentInfo {
@@ -42,7 +42,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
 
   send(){
     const info = {name: this.newName, email: this.newEmail, status: this.newStatus}
-    //console.log(info);
+    console.log(info);
     this.invitationsService.sendInfo(info)
       .subscribe(response =>{
         console.log(response);
