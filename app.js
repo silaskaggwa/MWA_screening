@@ -40,10 +40,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
+app.use('/staff', cors());
+app.use('/staff', staffRouter);
+
 app.use('/exam', invitationAuth);
 app.use('/exam', examRouter);
-
-app.use('/staff', staffRouter);
 
 app.use('/progress', cors(corsOptions));
 app.use('/progress', invitationAuth);
