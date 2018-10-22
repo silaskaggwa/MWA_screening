@@ -12,8 +12,9 @@ export class ExamService {
   retrieveExam(){
     return this.http.get(this.domain+'/progress/questions', { withCredentials: true });
   }
-  postSnapshot(qn_id, snapshot){
+  postSnapshot(qn_id, snapshot, qn_duration){
     const time_away = this.ngRedux.getState().time_away;
-    return this.http.patch(this.domain+'/progress', { qn_id, snapshot, time_away }, { withCredentials: true });
+    const time_used = this.ngRedux.getState().time_used;
+    return this.http.patch(this.domain+'/progress', { qn_id, snapshot, qn_duration, time_used, time_away }, { withCredentials: true });
   }
 }

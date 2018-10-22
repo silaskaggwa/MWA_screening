@@ -30,7 +30,11 @@ router.get('/questions', (req, res) => {
       return res.json({
         name: invitation.name,
         email: invitation.email,
-        questions: invitation.questions,
+        questions: invitation.questions.map(
+          qn => ExamService.packageQuestion(qn)
+        ),
+        time_used: invitation.time_used,
+        time_away: invitation.time_away,
         duration: config.exam.duration
       })
     });

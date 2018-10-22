@@ -9,7 +9,7 @@ const ProgressSchema = new mongoose.Schema({
 const AssignedQuestionSchema = new mongoose.Schema({
     _id: {type: String, required: true},
     question: {type: String, required: true},
-    duration: {type: Number, required: true},
+    duration: {type: Number},
     progress: [ProgressSchema]
 });
 
@@ -30,6 +30,7 @@ const InvitationSchema = new mongoose.Schema({
     started_at: Date,
     shd_answer_by: Date,
     answered_at: Date,
+    time_used: Number,
     time_away: Number,
     created_at: Date,
     updated_at: Date,

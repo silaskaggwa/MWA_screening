@@ -10795,11 +10795,12 @@ var ExamService = /** @class */ (function () {
         this.domain = 'http://localhost:3000';
     }
     ExamService.prototype.retrieveExam = function () {
-        return this.http.get(this.domain + '/exam/questions', { withCredentials: true });
+        return this.http.get(this.domain + '/progress/questions', { withCredentials: true });
     };
-    ExamService.prototype.postSnapshot = function (qn_id, snapshot) {
+    ExamService.prototype.postSnapshot = function (qn_id, snapshot, qn_duration) {
         var time_away = this.ngRedux.getState().time_away;
-        return this.http.patch(this.domain + '/exam', { qn_id: qn_id, snapshot: snapshot, time_away: time_away }, { withCredentials: true });
+        var time_used = this.ngRedux.getState().time_used;
+        return this.http.patch(this.domain + '/progress', { qn_id: qn_id, snapshot: snapshot, qn_duration: qn_duration, time_used: time_used, time_away: time_away }, { withCredentials: true });
     };
     ExamService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -10852,18 +10853,32 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var QuestionComponent = /** @class */ (function () {
     function QuestionComponent(examService) {
+        var _this = this;
         this.examService = examService;
         this.answer = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('');
+        this.startTimer = function () {
+            _this.theTimer = setInterval(function () {
+                _this.duration++;
+            }, 1000);
+        };
     }
     QuestionComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log('st_tm>>', this.question);
+        this.duration = this.question.duration;
         this.answer.valueChanges
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(500))
             .subscribe(function (snapshot) {
             console.log("qn_id>>", _this.question._id);
-            _this.examService.postSnapshot(_this.question._id, snapshot)
+            _this.examService.postSnapshot(_this.question._id, snapshot, _this.duration)
                 .subscribe(function (response) { console.log(response); }, function (error) { return console.log(error); });
         });
+    };
+    QuestionComponent.prototype.onFocus = function () {
+        this.startTimer();
+    };
+    QuestionComponent.prototype.onBlur = function () {
+        clearInterval(this.theTimer);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -10872,7 +10887,7 @@ var QuestionComponent = /** @class */ (function () {
     QuestionComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-question',
-            template: "\n    <div class=\"exam-input\">\n      <p>{{question.question}}</p>\n      <textarea matInput class=\"code-input\" rows=\"10\" [formControl]=\"answer\"></textarea>\n    </div>\n  ",
+            template: "\n    <div class=\"exam-input\">\n      <p>{{question.question}}</p>\n      <textarea matInput class=\"code-input\" rows=\"10\" (blur)=\"onBlur()\" (focus)=\"onFocus()\" [formControl]=\"answer\"></textarea>\n    </div>\n  ",
             styles: [__webpack_require__(/*! ./question.component.css */ "./src/app/exam/question.component.css")]
         }),
         __metadata("design:paramtypes", [_exam_service__WEBPACK_IMPORTED_MODULE_3__["ExamService"]])
@@ -10888,15 +10903,17 @@ var QuestionComponent = /** @class */ (function () {
 /*!********************************************!*\
   !*** ./src/app/exam/redux/exam.actions.ts ***!
   \********************************************/
-/*! exports provided: SET_INVITATION_ID, INCREMENT_TIME_AWAY */
+/*! exports provided: SET_INVITATION_ID, INCREMENT_TIME_AWAY, INCREMENT_TIME_USED */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_INVITATION_ID", function() { return SET_INVITATION_ID; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INCREMENT_TIME_AWAY", function() { return INCREMENT_TIME_AWAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INCREMENT_TIME_USED", function() { return INCREMENT_TIME_USED; });
 var SET_INVITATION_ID = 'SET_INVITATION_ID';
 var INCREMENT_TIME_AWAY = 'INCREMENT_TIME_AWAY';
+var INCREMENT_TIME_USED = 'INCREMENT_TIME_USED';
 
 
 /***/ }),
@@ -10916,18 +10933,27 @@ __webpack_require__.r(__webpack_exports__);
 
 var INITIAL_STATE = {
     invitation_id: null,
-    time_away: 33
+    time_used: 0,
+    time_away: 0,
 };
 function rootReducer(lastState, action) {
     switch (action.type) {
         case _exam_actions__WEBPACK_IMPORTED_MODULE_0__["SET_INVITATION_ID"]:
             return Object.assign({}, lastState, {
                 invitation_id: action.invitation_id,
+                time_used: action.time_used,
+                time_away: lastState.time_away
+            });
+        case _exam_actions__WEBPACK_IMPORTED_MODULE_0__["INCREMENT_TIME_USED"]:
+            return Object.assign({}, lastState, {
+                invitation_id: lastState.invitation_id,
+                time_used: lastState.time_used + action.increment,
                 time_away: lastState.time_away
             });
         case _exam_actions__WEBPACK_IMPORTED_MODULE_0__["INCREMENT_TIME_AWAY"]:
             return Object.assign({}, lastState, {
                 invitation_id: lastState.invitation_id,
+                time_used: lastState.time_used,
                 time_away: lastState.time_away + action.increment
             });
     }
