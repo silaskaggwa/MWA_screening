@@ -72,7 +72,7 @@ export class ExamComponent implements OnInit, OnDestroy {
           this.questions = data.questions;
           this.time_used = data.time_used;
           this.time_away = data.time_away;
-          this.duration = 5;//data.duration;
+          this.duration = 15;//data.duration;
           this.time_remaining = data.duration - this.time_used;
           this.ngRedux.dispatch({ type: SET_INVITATION_ID, invitation_id: data.id });
           this.show_loader = false;
