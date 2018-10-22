@@ -30,7 +30,7 @@ const InvitationSchema = new mongoose.Schema({
     started_at: Date,
     shd_answer_by: Date,
     answered_at: Date,
-    time_off: Number,
+    time_away: Number,
     created_at: Date,
     updated_at: Date,
 });

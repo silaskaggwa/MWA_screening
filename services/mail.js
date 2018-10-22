@@ -22,7 +22,7 @@ const sendInvitationEmail = (name, email, token) => {
 	mailOptions.html = `
 		<p>Dear ${name}, </p>
 		<p>*Invitation link can only be used once!</p>
-		<a href="${config.host+'/exam/?token='+token}">Click here to start test</a>
+		<a href="${config.host+'/exam/start/?token='+token}">Click here to start test</a>
 	`;
 	create(mailOptions);
 }

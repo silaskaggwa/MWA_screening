@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const config = require('./config');
 const cors = require('cors');
+const config = require('./config');
 
 const invitationAuth = require('./middleware/authentication').authenticated;
 const staffRouter = require('./routes/staff');
@@ -23,6 +23,19 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 
+const whitelist = ['http://localhost:3000','http://localhost:4200']
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log('orig>>', origin);
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
@@ -32,6 +45,14 @@ app.use('/staff', staffRouter);
 
 app.use('/exam', invitationAuth);
 app.use('/exam', examRouter);
+
+app.use('/progress', cors(corsOptions));
+app.use('/progress', invitationAuth);
+app.use('/progress', (req, res, next) => {
+  if(!req.user) return res.status(401).end('Unauthorized');
+  next();
+});
+app.use('/progress', examRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
