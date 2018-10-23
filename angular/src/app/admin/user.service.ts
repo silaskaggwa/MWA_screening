@@ -1,30 +1,26 @@
-//const User = require('../model/user');
-
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class UserService {
 
-  constructor() { }
-   createUser(data)
-   { 
-     console.log('hiii');
-   // return new User(data).save();
-    }
-// const getUserById = (id) => User.getUserById(id);
-//   getData(){
-//     return this.data;
-//   }
-  
+  domain: string = 'http://localhost:3000';
+  constructor(private http:HttpClient) { }
+
+  createUser(data){
+
+      console.log('service has data-> :'+JSON.stringify(data));
+      return this.http.post(this.domain+'/admin/user/create',data);//, { withCredentials: true });
+  }
+
+  getUser()
+  {
+    
+    return this.http.get(this.domain+'/admin/user');//, { withCredentials: true });
+  }
+ 
 }
-
-  
-
-// const createUser = (data) => {
-//     return new User(data).save();
-// }
-// const getUserById = (id) => User.getUserById(id);
-
-// module.exports = {createUser, getUserById};

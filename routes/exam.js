@@ -24,10 +24,8 @@ router.get('/answer', function(req, res) {
 });
 
 router.get('/admin', function(req, res) {
-  console.log("hiii");
   console.log('cookies>>> ', req.cookies.id_token);
   res.sendFile(path.join(__dirname,'../public/index.html'));
 });
-
 
 module.exports = router;

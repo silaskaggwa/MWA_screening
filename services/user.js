@@ -7,4 +7,8 @@ const createUser = (data) => {
 }
 const getUserById = (id) => User.getUserById(id);
 
-module.exports = {createUser, getUserById};
+const getUser = () => {
+   return User.find({});
+   
+}
+module.exports = {createUser, getUserById,getUser};

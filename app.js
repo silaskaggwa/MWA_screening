@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -11,10 +12,16 @@ const invitationAuth = require('./middleware/authentication').authenticated;
 const staffRouter = require('./routes/staff');
 const examRouter = require('./routes/exam');
 
+
+
+//admin
+const adminRouter = require('./routes/admin');
+
 //Connect mongoose to our database
 mongoose.connect(config.database.url);
 
 const app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +36,10 @@ app.use(cookieParser())
 app.use('/staff', staffRouter);
 app.use('/exam', invitationAuth);
 app.use('/exam', examRouter);
+
+//for admin
+app.use('/admin',cors());
+app.use('/admin', adminRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

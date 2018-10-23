@@ -1,104 +1,70 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {UserService} from './user.service'
+import { UserService } from './user.service'
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
-
-
+interface User {
+  _id: string,
+  name: string,
+  email: string,
+  role: string,
+  active: boolean
+}
 export interface PeriodicElement {
   name: string;
   email: string;
   role: string;
+  active: boolean;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Tigist', email:"tigist@gmail.com", role: 'Admin'},
-  { name: 'Silas', email: "tigist@gmail.com", role: 'Admin-Staff'},
-  { name: 'Alem', email: "tigist@gmail.com", role: 'Admin'},
-  { name: 'Tigist', email: "tigist@gmail.com", role: 'Admin'},
-  { name: 'Alem', email: "tigist@gmail.com", role: 'Admin'}
+const ELEMENT_DATA: User[] = [
+  { _id: '1', name: 'Tigist', email: "tigist@gmail.com", role: 'Admin', active: true },
+  { _id: '1', name: 'Silas', email: "tigist@gmail.com", role: 'Admin-Staff', active: true },
+  { _id: '1', name: 'Alem', email: "tigist@gmail.com", role: 'Admin', active: true },
+  { _id: '1', name: 'Tigist', email: "tigist@gmail.com", role: 'Admin', active: false },
+  { _id: '1', name: 'Alem', email: "tigist@gmail.com", role: 'Admin', active: false }
 ];
- @Component({
+@Component({
   selector: 'admin',
-  template: `
-  <mat-toolbar>
-  <span>Register</span>
-  </mat-toolbar>
-  <mat-card class="my-card">
-   <mat-card-content>
-      <form (ngSubmit)="createUser(f)" #f="ngForm" class="my-form">
-          <mat-form-field class="full-width">
-              <mat-label>Name</mat-label>
-              <input ngModel name="fname" #fname="ngModel" matInput  placeholder="First name"  required>
-            </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
-            <input  ngModel name="email" #fname="ngModel" matInput  placeholder="Email" required>
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Role</mat-label>
-            <input ngModel name="role" #role="ngModel" matInput  placeholder="role" required>
-         </mat-form-field>     
-   
-   <mat-card-actions>
-      <button mat-raised-button (click)="openDialog()" color="primary" >SAVE</button>
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon" >favorite</mat-icon>
-      </button>
-   </mat-card-actions>
-  </form>
-
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-<!-- Name Column -->
-<ng-container matColumnDef="name">
-  <th mat-header-cell *matHeaderCellDef> Name </th>
-  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-</ng-container>
-
-<!-- Email Column -->
-<ng-container matColumnDef="email">
-  <th mat-header-cell *matHeaderCellDef> Email </th>
-  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-</ng-container>
-
-<!-- Status Column -->
-<ng-container matColumnDef="role">
-  <th mat-header-cell *matHeaderCellDef> Role </th>
-  <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-</ng-container>
-
-<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-
-
-  </mat-card-content>
-  </mat-card>
-  `,
+  templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
 
+  constructor(private userService: UserService, public dialog: MatDialog) {
 
- 
-  constructor(private userService: UserService) { 
-  
   }
 
   ngOnInit() {
+    this.getUser()
   }
-  arr: any[]=[];  
+  arr: any[] = [];
+  msg: string;
+  dataSource: User[];
+  openDialog() {
 
-  
-  createUser(form : NgForm) {
-    this.arr = form.value
-    this.userService.createUser('hi');
-    console.log('array', this.arr);
-    console.log('value', JSON.stringify(form.value))
-    
-    
+    console.log('tg dialog');
+    // this.dialog.open(AddUserComponent);
+
   }
-  displayedColumns: string[] = [ 'name', 'email', 'role'];
-  dataSource = ELEMENT_DATA;
+  createUser(form: NgForm) {
+    this.arr = form.value;
+    this.userService.createUser(this.arr)
+      .subscribe(resp => { console.log('resp>>', resp) })
+    this.msg = "user is saved!";
+  }
+  getUser() {
+    //console.log('users', this.userService.getUser());
+
+    this.userService.getUser()
+      .subscribe((data:User[]) => {
+        console.log('users data', data);
+        this.dataSource =data;
+      }, err => { console.log('err', err.message) });
+
+  }
+
+  displayedColumns: string[] = ['name', 'email', 'role', 'status'];
+ // dataSource = ELEMENT_DATA;
+
 }

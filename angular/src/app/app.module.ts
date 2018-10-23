@@ -7,7 +7,9 @@ import { HomeComponent } from './home.component';
 import { P404Component } from './p404.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyMaterialModule } from  './material.module';
-import { Services } from '@angular/core/src/view';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 
 
 const APP_ROUTES: Routes = [
@@ -25,11 +27,14 @@ const APP_ROUTES: Routes = [
     HomeComponent,
     P404Component
   ],
+  
   imports: [
     BrowserModule,
     MyMaterialModule,
     RouterModule.forRoot(APP_ROUTES),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
