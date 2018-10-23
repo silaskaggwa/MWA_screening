@@ -1,5 +1,12 @@
 const Invitation = require('../models/invitation');
+const Question = require('../models/questions');
 const config = require('../config');
+
+//save new question
+const createQuestion = (data) => {
+    //console.log('createQuestion');
+    return new Question(data).save();
+}
 
 const createInvitation = (data) => {
     return new Invitation(data).save();
@@ -75,4 +82,4 @@ const addProgress = (id, data) => {
     });
 }
 
-module.exports = {createInvitation, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
+module.exports = {createInvitation, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};

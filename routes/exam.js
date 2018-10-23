@@ -23,6 +23,11 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,'../public/index.html'));
 });
 
+router.get('/admin', function(req, res) {
+  console.log('cookies>>> ', req.cookies.id_token);
+  res.sendFile(path.join(__dirname,'../public/index.html'));
+});
+
 router.get('/questions', (req, res) => {
   console.log('user>>> ', req.user);
   ExamService.getInvitationById(req.user.id)
