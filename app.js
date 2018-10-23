@@ -29,10 +29,16 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 
+app.use((req, res, next) => {
+  if(!req.headers.origin){
+    req.headers.origin = req.headers.app_origin;
+  }
+  next();
+});
+
 const whitelist = ['http://localhost:3000','http://localhost:4200']
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log('orig>>', origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -45,6 +51,7 @@ const corsOptions = {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
+
 
 app.use('/staff', cors());
 app.use('/staff', staffRouter);

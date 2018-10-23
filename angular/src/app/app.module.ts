@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { InterceptorModule } from './interceptor.module';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
@@ -31,12 +32,11 @@ const APP_ROUTES: Routes = [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     BrowserAnimationsModule,
-    RouterModule.forRoot(APP_ROUTES),
-    BrowserAnimationsModule,
     FlexLayoutModule,
     MatToolbarModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    InterceptorModule
   ],
      
   providers: [],
