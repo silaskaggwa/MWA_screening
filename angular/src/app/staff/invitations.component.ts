@@ -3,7 +3,6 @@ import { InvitationsService } from './invitations.service';
 import { Subscription } from 'rxjs';
 
 interface studentInfo {
-  id: string,
   name: string,
   email: string,
   status: string;
@@ -21,14 +20,14 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   newEmail: string = '';
   newStatus: string = 'Pending';
 
-  studentInfo;
+  dataSource: studentInfo [];
   addApplicant: boolean = false;
 
   private subscription: Subscription;
 
   constructor(private invitationsService: InvitationsService){
-    this.studentInfo = invitationsService.retrieveInfo();    
-    this.studentInfo = invitationsService.getStudentInfo();
+    //this.dataSource = invitationsService.retrieveInfo();    
+    this.dataSource = invitationsService.getStudentInfo();
   }
 
   ngOnInit(){

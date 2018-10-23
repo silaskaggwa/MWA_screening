@@ -1,22 +1,32 @@
-<mat-card-content>
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-       <span><a href="/">HOME</a></span>
-       <span class="spacer"></span>
-       <a  mat-button  routerLink="/logout">Logout</a>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  
-  <form class="my-form">
-    <div class="form-group">
+<mat-card class="my-card">
       <h2>Invitations</h2>
-      <table class="table table-striped">
+      <!-- <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let student"> {{student.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let student"> {{student.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let student"> {{student.status}} </td>
+          </ng-container>
+         
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content> -->
+      
+ <table mat-table>
         <tr>
           <th scope="col"> Name </th>
           <th scope="col"> Email </th>
           <th scope="col"> Status </th>
         </tr>
-        <tr *ngFor="let student of studentInfo">
+        <tr *ngFor="let student of dataSource">
           <td>{{ student.name }}</td>
           <td>{{ student.email }}</td>
           <td>{{ student.status }}</td>
@@ -43,6 +53,7 @@
           </div>
         </form> 
       </mat-card-content>
-    </div>
-  </form>
-</mat-card-content>
+    <!-- </div> -->
+  <!-- </form> -->
+
+</mat-card>
