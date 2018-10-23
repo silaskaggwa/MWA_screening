@@ -2,12 +2,17 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { InvitationsService } from './invitations.service';
 import { Subscription } from 'rxjs';
 
-interface studentInfo {
-  id: string,
-  name: string,
-  email: string,
-  status: string;
+export interface PeriodicElement {
+  question: string;
+  active: boolean;
 }
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { question: 'what is last name of Tigist?', active: true },
+  { question: 'what is last name of Silas?', active: true },
+  { question: 'what is last name of Alem?', active: true },
+
+];
 
 @Component({
   selector: 'invitations',
@@ -15,43 +20,22 @@ interface studentInfo {
   styleUrls: ['./invitations.component.css']
 })
 
-export class InvitationsComponent implements OnInit, OnDestroy {
+export class InvitationsComponent implements OnInit {
   
-  newName: string = '';
-  newEmail: string = '';
-  newStatus: string = 'Pending';
+  arr: any[] = [];
+  msg: string;
+  constructor() { }
 
-  studentInfo;
-  addApplicant: boolean = false;
-
-  private subscription: Subscription;
-
-  constructor(private invitationsService: InvitationsService){
-    this.studentInfo = invitationsService.retrieveInfo();    
-    this.studentInfo = invitationsService.getStudentInfo();
+  ngOnInit() {
+  }
+  addQuestion() {
+    
+    
+    this.msg = '  Question is saved!';
   }
 
-  ngOnInit(){
-    this.subscription = this.invitationsService.retrieveInfo()
-      .subscribe((data: studentInfo) => {
-        console.log(data); 
-      })
-  }
- 
-  unhide(){ this.addApplicant = !this.addApplicant; }
-
-  send(){
-    const info = {name: this.newName, email: this.newEmail, status: this.newStatus}
-    console.log(info);
-    this.invitationsService.sendInfo(info)
-      .subscribe(response =>{
-        console.log(response);
-      })
-  }
-
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
+  displayedColumns: string[] = ['question', 'active'];
+  dataSource = ELEMENT_DATA;
 }
 
 

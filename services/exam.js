@@ -7,7 +7,12 @@ const createQuestion = (data) => {
     //console.log('createQuestion');
     return new Question(data).save();
 }
-
+//save new question
+const getQuestions = (data) => {
+    //console.log('createQuestion');
+    return Question.find({});
+   
+}
 const createInvitation = (data) => {
     return new Invitation(data).save();
 }
@@ -82,4 +87,4 @@ const addProgress = (id, data) => {
     });
 }
 
-module.exports = {createInvitation, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
+module.exports = {createInvitation, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress,getQuestions};

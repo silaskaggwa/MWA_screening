@@ -48,5 +48,13 @@ router.post('/questions/create', function (req, res) {
     console.log('savedQuestion>>', info)
   }).catch(err => { throw err });
 });
-
+//admin get question list
+router.get('/questions', function (req, res) {
+  console.log(' hi  cookies>>> ', req.cookies.id_token);
+  ExamService.getQuestions()
+    .then(data => {
+      res.json(data);
+    });
+  
+});
 module.exports = router;
