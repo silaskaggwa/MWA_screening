@@ -13,6 +13,7 @@ import { HttpModule } from '@angular/http';
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
   {path: 'exam', loadChildren: './exam/exam.module#ExamModule'},
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
   {path: 'staff', loadChildren: './staff/staff.module#StaffModule'},
   {path: '404', component: P404Component},
   {path: '**', redirectTo: '404'}
@@ -21,11 +22,15 @@ const APP_ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    
     HomeComponent,
     P404Component
   ],
+  
   imports: [
     BrowserModule,
+    RouterModule.forRoot(APP_ROUTES),
+    BrowserAnimationsModule,
     RouterModule.forRoot(APP_ROUTES),
     BrowserAnimationsModule,
     FlexLayoutModule,
