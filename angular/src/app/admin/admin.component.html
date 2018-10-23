@@ -1,17 +1,18 @@
-<!-- <mat-toolbar>
-    <span>Register User</span>
-</mat-toolbar> -->
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-       <a mat-button routerLink="#">HOME</a>
-       <a mat-button routerLink="/admin">Register User</a>
-       <span class="spacer"></span>
-       <a mat-button routerLink="/admin/questions">Question</a>
+        <a mat-button routerLink="/admin"><h2>TAS Screening</h2></a>
+        <span class="spacer"></span><span class="spacer"></span>
+        <a mat-button routerLink="/admin">Register User</a>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/admin/questions">Question</a>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/admin/review">Review</a>
     </mat-toolbar-row>
-  </mat-toolbar>
+</mat-toolbar>
       
 <mat-card class="my-card">
     <mat-card-content>
+        <h2>Add Staff</h2>
         <form (ngSubmit)="createUser(f)" #f="ngForm" class="my-form">
             <mat-form-field class="full-width">
                 <mat-label>Name</mat-label>

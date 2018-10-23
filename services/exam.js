@@ -56,6 +56,38 @@ const startExam = (id) => {
     });
 }
 
+const endExam = (id, data) => {
+    console.log(id+'- end_data>>', data);
+    return new Promise((resolve, reject) => {
+        Invitation.updateOne(
+            {_id: id}, 
+            {
+                $set: {
+                    time_away: data.time_away,
+                    time_used: data.time_used,
+                    status: config.invitation_status.ANSWERED,
+                    answered_at: new Date() //this needs to be modified later
+                }
+            }, (err, info) => {
+                if(err) throw err;
+                resolve(info);
+            });
+    });
+}
+
+const setExamStatus = (id, status) => {
+    Invitation.updateOne(
+        {_id: id}, 
+        {
+            $set: {
+                status: status,
+            }
+        }, (err, info) => {
+            if(err) throw err;
+            console.log("Invitation set to status "+status);
+        });
+}
+
 const addProgress = (id, data) => {
     //console.log(id+' - progress>>', data);
     let theStatus = config.invitation_status.STARTED
@@ -82,4 +114,11 @@ const addProgress = (id, data) => {
     });
 }
 
-module.exports = {createInvitation, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
+const getAnsweredInvitations = () => {
+    return Invitation.find(
+        {status: config.invitation_status.ANSWERED},
+        {_id: 1, email: 1, started_at: 1, answered_at: 1}
+    ).sort({updated_at: 1});
+}
+
+module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations};

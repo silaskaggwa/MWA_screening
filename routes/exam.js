@@ -29,19 +29,30 @@ router.get('/admin', function(req, res) {
 });
 
 router.get('/questions', (req, res) => {
-  console.log('user>>> ', req.user);
   ExamService.getInvitationById(req.user.id)
     .then(invitation => {
-      return res.json({
-        name: invitation.name,
-        email: invitation.email,
-        questions: invitation.questions.map(
-          qn => ExamService.packageQuestion(qn)
-        ),
-        time_used: invitation.time_used,
-        time_away: invitation.time_away,
-        duration: config.exam.duration
-      })
+      const remaining_minutes = parseInt((invitation.shd_answer_by - new Date())/60000);
+      const duration_minutes = parseInt((invitation.shd_answer_by - invitation.started_at)/60000);
+
+      if(invitation.status == config.invitation_status.ANSWERED){
+        res.clearCookie('id_token');
+        return res.json({status: 'ended'});
+      }else if(remaining_minutes <= 0){
+        ExamService.setExamStatus(invitation._id, config.invitation_status.ANSWERED);
+        res.clearCookie('id_token');
+        return res.json({status: 'ended'});
+      }else{
+        return res.json({
+          name: invitation.name,
+          email: invitation.email,
+          questions: invitation.questions.map(
+            qn => ExamService.packageQuestion(qn)
+          ),
+          time_used: duration_minutes - remaining_minutes,
+          time_away: invitation.time_away,
+          duration: duration_minutes
+        })
+      }
     });
 });
 
@@ -50,6 +61,17 @@ router.patch('/', (req, res) => {
     .then(info => {
       console.log('info>>',info);
       return res.status(201).json({status: 'success'});
+    })
+    .catch(err => {
+      return res.status(500).end({status: 'failed'});
+    });
+});
+
+router.patch('/end', (req, res) => {
+  ExamService.endExam(req.user.id, req.body)
+    .then(info => {
+      console.log('info>>',info);
+      return res.status(201).json({status: 'ended'});
     })
     .catch(err => {
       return res.status(500).end({status: 'failed'});

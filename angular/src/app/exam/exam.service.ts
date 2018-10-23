@@ -17,4 +17,11 @@ export class ExamService {
     const time_used = this.ngRedux.getState().time_used;
     return this.http.patch(this.domain+'/progress', { qn_id, snapshot, qn_duration, time_used, time_away }, { withCredentials: true });
   }
+
+  endExam(){
+    const time_away = this.ngRedux.getState().time_away;
+    const time_used = this.ngRedux.getState().time_used;
+    const submit = true;
+    return this.http.patch(this.domain+'/progress/end', { submit, time_used, time_away }, { withCredentials: true });
+  }
 }
