@@ -6,8 +6,12 @@ const authenticated = jwt({
 	credentialsRequired: false,
 	getToken: (req) => {
 		token = req.query.token;
-		//console.log("token>>>>>>",token);
+		//console.log("cred_token>>>>>>",token);
+		//console.log("cookiesss>>>>>>",req.cookies);
 		if (token) return token;
+		else if(req.cookies.id_token){
+			return req.cookies.id_token
+		}
 		return null;
 	},
 });

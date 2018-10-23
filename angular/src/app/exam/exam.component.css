@@ -1,0 +1,15 @@
+.container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.exam-form {
+    width: 100%;
+}
+.exam-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+.exam-card {
+    overflow: auto;
+    box-sizing: border-box
+}

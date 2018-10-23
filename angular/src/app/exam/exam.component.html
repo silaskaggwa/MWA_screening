@@ -1,0 +1,27 @@
+<div class="container" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
+    <div fxFlex=70% class="exam-card">
+        <div fxLayout="row">
+                <mat-chip-list>
+                    <mat-chip color="primary" selected>
+                        <mat-icon>person</mat-icon>
+                        {{student_name}}
+                    </mat-chip>
+                    <mat-chip color="accent" selected>
+                        <mat-icon>email</mat-icon>
+                        {{student_email}}
+                    </mat-chip>
+                    <mat-chip color="warn" selected>
+                        <mat-icon>timer</mat-icon>
+                        {{time_remaining}}
+                    </mat-chip>
+                </mat-chip-list>
+        </div>
+        <mat-progress-bar mode="indeterminate" *ngIf="show_loader"></mat-progress-bar>
+
+        <app-question class="exam-form" *ngFor="let qn of questions" [question]="qn" ></app-question>
+        
+        <div fxLayout="row" class="exam-footer">
+            <button mat-raised-button>Submit</button>
+        </div>
+    </div>
+</div>
