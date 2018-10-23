@@ -82,4 +82,4 @@ const addProgress = (id, data) => {
     });
 }
 
-module.exports = {createInvitation, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
+module.exports = {createInvitation, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress};
