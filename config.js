@@ -12,6 +12,9 @@ module.exports = {
 		auth: {
 			user: process.env.MAIL_USER || 'tas.screening.mwa@gmail.com',
 			pass: process.env.MAIL_PASS || 'tigist_alem_silas'
+		},
+		tls: {
+			rejectUnauthorized: false
 		}
 	},
 	exam: {

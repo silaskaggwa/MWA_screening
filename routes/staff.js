@@ -28,7 +28,8 @@ router.post('/invite', function(req, res, next) {
   const data = {
     status: config.invitation_status.SENT,
     name: req.body.name,
-    email: req.body.email
+    email: req.body.email,
+    questions: ExamService.generateQuestions()
   };
   ExamService.createInvitation(data)
     .then(invitation => {
