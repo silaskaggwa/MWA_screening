@@ -21,6 +21,8 @@ export class QuestionService {
   {
     //console.log('hi get question service');
     return this.http.get(this.domain+'/admin/questions');//, { withCredentials: true });
+
+    //return this.http.get(this.domain+'/admin/questions/all');//, { withCredentials: true });
   }
  
 }

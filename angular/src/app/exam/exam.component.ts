@@ -13,7 +13,8 @@ interface Exam {
   questions: Array<any>,
   duration: number,
   time_used: number,
-  time_away: number
+  time_away: number,
+  status: string
 }
 
 @Component({
@@ -50,7 +51,7 @@ export class ExamComponent implements OnInit, OnDestroy {
         this.ngRedux.dispatch({ type: INCREMENT_TIME_USED, increment: 1 });
         this.time_remaining = timeRemaining;
       }
-    }, 1000);// 60000);
+    }, 60000);
   }
 
   ngOnInit() {
@@ -67,24 +68,37 @@ export class ExamComponent implements OnInit, OnDestroy {
     this.retrieveExamSubscription = this.examService.retrieveExam()
       .subscribe(
         (data: Exam) => {
-          this.student_name = data.name;
-          this.student_email = data.email;
-          this.questions = data.questions;
-          this.time_used = data.time_used;
-          this.time_away = data.time_away;
-          this.duration = 15;//data.duration;
-          this.time_remaining = data.duration - this.time_used;
-          this.ngRedux.dispatch({ type: SET_INVITATION_ID, invitation_id: data.id });
-          this.show_loader = false;
-          this.theTimer = this.startTimer();
-          if(this.time_remaining > 0){
-            this.exam_ended.next(false);
+          if(data.status == 'ended'){
+            this.router.navigate(['/exam/ended']);
+          }else if(data.status == 'unauthorized'){
+            this.router.navigate(['/unauthorized']);
           }else{
-            this.exam_ended.next(true);
+            this.student_name = data.name;
+            this.student_email = data.email;
+            this.questions = data.questions;
+            this.time_used = data.time_used;
+            this.time_away = data.time_away;
+            this.duration = data.duration;
+            this.time_remaining = data.duration - data.time_used;
+            this.ngRedux.dispatch({ type: SET_INVITATION_ID, invitation_id: data.id });
+            this.show_loader = false;
+            this.theTimer = this.startTimer();
+            if(this.time_remaining > 0){
+              this.exam_ended.next(false);
+            }else{
+              this.exam_ended.next(true);
+            }
           }
           
+        },
+        (err: Exam) => {
+          this.router.navigate(['/unauthorized']);
         }
       )
+  }
+
+  submitAnswer(){
+    this.lockExam();
   }
 
   killTimer(){
@@ -96,8 +110,16 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
 
   lockExam(){
+    this.show_loader = true;
     setTimeout(() => {
-      this.router.navigate(['/exam/ended']);
-    }, 1000);
+      //this.router.navigate(['/exam/ended']);
+      this.examService.endExam()
+        .subscribe((data: Exam) => {
+          if(data.status == 'ended'){
+            this.show_loader = false;
+            this.router.navigate(['/exam/ended']);
+          }
+        })
+    }, 500);
   }
 }

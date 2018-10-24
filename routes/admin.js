@@ -7,7 +7,7 @@ const AuthService = require('../services/authentication');
 const UserService = require('../services/user');
 const config = require('../config');
 
-router.get('/admin', function (req, res) {
+router.get('/', function (req, res) {
 
   console.log('cookies>>> ', req.cookies.id_token);
   res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -46,6 +46,7 @@ router.post('/questions/create', function (req, res) {
     active: req.body.active,
   }).then((info) => {
     console.log('savedQuestion>>', info)
+    return res.json({status: 'success'})
   }).catch(err => { throw err });
 });
 //admin get question list
@@ -57,4 +58,41 @@ router.get('/questions', function (req, res) {
     });
   
 });
+
+router.get('/questions/all', function (req, res) {
+
+  console.log('body>>>> ', req.body);
+  ExamService.getAllQuestions().then((info) => {
+    console.log('savedQuestion>>', info)
+    return res.json(info);
+  }).catch(err => { throw err });
+});
+
+router.get('/submissions',  (req, res) => {
+  ExamService.getAnsweredInvitations()
+    .then(data => {
+      return res.json(data);
+    })
+    .catch(err => {
+      throw err;
+    })
+});
+router.get('/submissions/:id',  (req, res) => {
+  ExamService.getInvitationById(req.params.id)
+    .then(data => {
+      return res.json(data);
+    })
+    .catch(err => {
+      throw err;
+    })
+});
+router.post('/submissions/:id',  (req, res) => {
+  const pass = req.body.pass;
+  let status = config.invitation_status.FAIL;
+  if(pass) status = config.invitation_status.PASS;
+
+  ExamService.setExamStatus(req.params.id, status);
+  return res.json({status});
+});
+
 module.exports = router;

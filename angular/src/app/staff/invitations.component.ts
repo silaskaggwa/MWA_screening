@@ -1,18 +1,13 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { InvitationsService } from './invitations.service';
 import { Subscription } from 'rxjs';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
-export interface PeriodicElement {
-  question: string;
-  active: boolean;
+interface studentInfo {
+  name: string,
+  email: string,
+  status: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { question: 'what is last name of Tigist?', active: true },
-  { question: 'what is last name of Silas?', active: true },
-  { question: 'what is last name of Alem?', active: true },
-
-];
 
 @Component({
   selector: 'invitations',
@@ -20,22 +15,42 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./invitations.component.css']
 })
 
-export class InvitationsComponent implements OnInit {
+export class InvitationsComponent implements OnInit, OnDestroy {
   
-  arr: any[] = [];
-  msg: string;
-  constructor() { }
+  newName: string = '';
+  newEmail: string = '';
+  newStatus: string = 'Pending';
 
-  ngOnInit() {
-  }
-  addQuestion() {
-    
-    
-    this.msg = '  Question is saved!';
+  dataSource: studentInfo[];
+  addApplicant: boolean = false;
+
+  private subscription: Subscription;
+
+  constructor(private invitationsService: InvitationsService){
+    //this.dataSource = invitationsService.retrieveInfo();    
+    this.dataSource = invitationsService.getStudentInfo();
   }
 
-  displayedColumns: string[] = ['question', 'active'];
-  dataSource = ELEMENT_DATA;
+  ngOnInit(){
+    this.subscription = this.invitationsService.retrieveInfo()
+      .subscribe((data: studentInfo) => {
+        console.log(data); 
+      })
+  }
+ 
+  unhide(){ this.addApplicant = !this.addApplicant; }
+
+  send(){
+    const info = {name: this.newName, email: this.newEmail, status: this.newStatus}
+    console.log(info);
+    this.invitationsService.sendInfo(info)
+      .subscribe(response =>{
+        console.log(response);
+      })
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+  displayedColumns: string[] = ['name', 'email', 'status'];
 }
-
-

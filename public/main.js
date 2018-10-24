@@ -11,7 +11,6 @@ var map = {
 	"./admin/admin.module": [
 		"./src/app/admin/admin.module.ts",
 		"default~admin-admin-module~exam-exam-module~staff-staff-module",
-		"default~admin-admin-module~staff-staff-module",
 		"admin-admin-module"
 	],
 	"./exam/exam.module": [
@@ -22,7 +21,6 @@ var map = {
 	"./staff/staff.module": [
 		"./src/app/staff/staff.module.ts",
 		"default~admin-admin-module~exam-exam-module~staff-staff-module",
-		"default~admin-admin-module~staff-staff-module",
 		"staff-staff-module"
 	]
 };
@@ -66,7 +64,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <span>{{title}}</span>\n</mat-toolbar>\n<router-outlet></router-outlet>"
+module.exports = "<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -128,6 +126,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 /* harmony import */ var _interceptor_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./interceptor.module */ "./src/app/interceptor.module.ts");
+/* harmony import */ var _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./unauthorized.component */ "./src/app/unauthorized.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -146,11 +145,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var APP_ROUTES = [
     { path: '', component: _home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"] },
     { path: 'exam', loadChildren: './exam/exam.module#ExamModule' },
     { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
     { path: 'staff', loadChildren: './staff/staff.module#StaffModule' },
+    { path: 'unauthorized', component: _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__["UnauthorizedComponent"] },
     { path: '404', component: _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"] },
     { path: '**', redirectTo: '404' }
 ];
@@ -163,12 +164,11 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
                 _home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"],
-                _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"]
+                _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"],
+                _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__["UnauthorizedComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(APP_ROUTES),
-                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(APP_ROUTES),
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"],
                 _angular_flex_layout__WEBPACK_IMPORTED_MODULE_8__["FlexLayoutModule"],
@@ -217,8 +217,8 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home',
-            template: '',
-            styles: []
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        TAS Screening\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
     ], HomeComponent);
@@ -254,8 +254,6 @@ var HttpsRequestInterceptor = /** @class */ (function () {
     function HttpsRequestInterceptor() {
     }
     HttpsRequestInterceptor.prototype.intercept = function (req, next) {
-        //location = new Location();
-        console.log(location);
         var dupReq = req.clone({ headers: req.headers.set('app_origin', location.origin) });
         return next.handle(dupReq);
     };
@@ -313,12 +311,53 @@ var P404Component = /** @class */ (function () {
     P404Component = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-p404',
-            template: "\n    <p>\n      p404 works!\n    </p>\n  ",
-            styles: []
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        404 Not Found !\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
     ], P404Component);
     return P404Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/unauthorized.component.ts":
+/*!*******************************************!*\
+  !*** ./src/app/unauthorized.component.ts ***!
+  \*******************************************/
+/*! exports provided: UnauthorizedComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UnauthorizedComponent", function() { return UnauthorizedComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var UnauthorizedComponent = /** @class */ (function () {
+    function UnauthorizedComponent() {
+    }
+    UnauthorizedComponent.prototype.ngOnInit = function () {
+    };
+    UnauthorizedComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-unauthorized',
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        UNAUTHORIZED !\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
+        }),
+        __metadata("design:paramtypes", [])
+    ], UnauthorizedComponent);
+    return UnauthorizedComponent;
 }());
 
 

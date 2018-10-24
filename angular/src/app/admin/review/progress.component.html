@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <a mat-button routerLink="/admin"><h2>TAS Screening</h2></a>
+        <span class="spacer"></span><span class="spacer"></span>
+        <a mat-button routerLink="/admin">Register User</a>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/admin/questions">Question</a>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/admin/review">Review</a>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="qn-answer">
+    {{currentQuestion.question}}
+    <div class="container" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
+        <button mat-icon-button color="primary" (click)="goToQuestion(numCurrQuestion-1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">arrow_back_ios</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <span class="center-content">
+            <mat-chip color="primary">{{numCurrQuestion}} / {{numQuestions}}</mat-chip>
+        </span>
+        <span class="spacer"></span>
+        <button mat-icon-button color="primary" (click)="goToQuestion(numCurrQuestion+1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+    <div class="container" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
+        <button mat-icon-button color="primary" (click)="goToSnapshot(numCurrSnapshot-1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">arrow_back_ios</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <span class="center-content">
+            <mat-chip color="primary">{{numCurrSnapshot}} / {{numProgresses}}</mat-chip>
+        </span>
+        <span class="spacer"></span>
+        <button mat-icon-button color="primary" (click)="goToSnapshot(numCurrSnapshot+1)">
+            <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="show_loader"></mat-progress-bar>
+    <div class="container" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center">
+        <textarea matInput class="code-input" rows="35" [disabled]="true">{{currentSnapshot.text}}</textarea>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" class="user-info">
+        <mat-chip-list>
+            <mat-chip color="primary" selected>
+                <mat-icon>person</mat-icon>
+                {{reviewData.name}}
+            </mat-chip>
+            <mat-chip color="accent" selected>
+                <mat-icon>email</mat-icon>
+                {{reviewData.email}}
+            </mat-chip>
+            <mat-chip color="warn" selected>
+                <mat-icon>timer</mat-icon>
+                {{reviewData.time_used}}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+</div>
+<div class="fab-container right">
+    <button mat-fab color="primary" (click)="setPass(true)"><mat-icon>check</mat-icon></button>
+    <button mat-fab color="warn" (click)="setPass(false)"><mat-icon>close</mat-icon></button>
+</div>
+<div class="fab-container left">
+    <button mat-fab color="primary">{{numCurrQuestion}}</button>
+    <button mat-fab color="primary"><mat-icon class="with-time">timer</mat-icon>{{currentQuestion.duration}}</button>
+</div>

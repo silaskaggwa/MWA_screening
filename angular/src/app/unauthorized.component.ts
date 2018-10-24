@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-unauthorized',
   template: `
     <mat-toolbar color="primary">
       <mat-toolbar-row>
@@ -11,13 +11,13 @@ import { Component, OnInit } from '@angular/core';
     </mat-toolbar>
     <div>
       <h1>
-        TAS Screening
+        UNAUTHORIZED !
       </h1>
     </div>
   `,
   styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
 })
-export class HomeComponent implements OnInit {
+export class UnauthorizedComponent implements OnInit {
 
   constructor() { }
 

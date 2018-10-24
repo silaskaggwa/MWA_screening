@@ -7,25 +7,24 @@ export interface Question {
   active: boolean;
 }
 
-const ELEMENT_DATA: Question[] = [
-  { question: 'what is last name of Tigist?', active: true },
-  { question: 'what is last name of Silas?', active: true },
-  { question: 'what is last name of Alem?', active: true },
-
-];
 @Component({
   selector: 'app-question',
   templateUrl: './questions.component.html',
-  styles: [`table {width: 70%;} label{color:green}`]
+  styles: [`
+    table {width: 100%;} label{color:green} .l-container {margin: 20px 10%;}
+    .the-question {width: 80%;}
+    .the-qn-status {width: 10%;}
+  `]
 })
 export class QuestionsComponent implements OnInit {
   arr: any[] = [];
   msg: string;
+
   dataSource: Question[];
-  constructor(private questionService: QuestionService) {  this.getQuestions();}
+  constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
-   
+    this.getQuestions();
   }
   addQuestion(form: NgForm) {
     this.arr = form.value

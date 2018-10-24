@@ -28,7 +28,7 @@ export class InvitationsService {
 
   sendInfo(info){
     this.studentInfo.push(info);
-    return this.http.post(this.domain+'/staff/invite', info);
+    return this.http.post(this.domain+'/staff', info);
   }
   
 }
