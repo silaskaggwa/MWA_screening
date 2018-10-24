@@ -5,7 +5,7 @@ const MailService = require('../services/mail');
 const ExamService = require('../services/exam');
 const config = require('../config');
 
-router.get('/invite', function(req, res, next) {
+router.get('/info', function(req, res, next) {
   const data = {
     status: config.invitation_status.SENT,
     name: 'Silas',
