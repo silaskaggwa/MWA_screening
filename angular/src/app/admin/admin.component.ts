@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from './user.service'
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA, MatSlideToggleChange } from '@angular/material';
 
 interface User {
   _id: string,
@@ -34,15 +34,23 @@ export class AdminComponent implements OnInit {
   arr: any[] = [];
   msg: string;
   dataSource: User[];
-  device:boolean = true;
+  //device:boolean = true;
   //to deactivate user
-  
-  openDialog() {
-
-    console.log('tg dialog');
-    // this.dialog.open(AddUserComponent);
-
+  color = 'accent';
+  checked: number = 1;
+  disabled = false;
+  device: any = [];
+  onChange(value) {
+    console.log(this)
+    if (value.checked === true) {
+      this.checked = 1;
+      console.log(1);
+    } else {
+      this.checked = 0;
+      console.log(0);
+    }
   }
+
   createUser(form: NgForm) {
     this.arr = form.value;
     this.userService.createUser(this.arr)
@@ -54,18 +62,17 @@ export class AdminComponent implements OnInit {
     //console.log('users', this.userService.getUser());
 
     this.userService.getUser()
-      .subscribe((data:User[]) => {
+      .subscribe((data: User[]) => {
         console.log('users data', data);
-        this.dataSource =data;
+        this.dataSource = data;
       }, err => { console.log('err', err.message) });
 
   }
-  deactivateUser()
-  {
+  deactivateUser() {
     //to deactivate a user
   }
 
-  displayedColumns: string[] = ['position','name', 'email', 'role', 'status'];
- // dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['position', 'name', 'email', 'role', 'status'];
+  // dataSource = ELEMENT_DATA;
 
 }
