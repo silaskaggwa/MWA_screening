@@ -1,4 +1,7 @@
 table {
-  width: 80%;
+  width: 100%;
 }
 
+.l-container {
+  margin: 0 10%;
+}

@@ -52,6 +52,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
     this.invitationsService.sendInfo(info)
       .subscribe(response =>{
         console.log(response);
+        this.getInfo();
       })
   }
 

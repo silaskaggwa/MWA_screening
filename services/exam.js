@@ -139,5 +139,12 @@ const getAnsweredInvitations = () => {
     ).sort({updated_at: 1});
 }
 
-module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations, generateQuestionsXjt, getAllQuestions, getQuestions};
+const getAllInvitations = () => {
+    return Invitation.find(
+        {},
+        {name: 1, email: 1, status: 1}
+    ).sort({updated_at: -1});
+}
+
+module.exports = {createInvitation, getAllInvitations, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations, generateQuestionsXjt, getAllQuestions, getQuestions};
 

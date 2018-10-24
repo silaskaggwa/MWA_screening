@@ -5,7 +5,7 @@ const MailService = require('../services/mail');
 const ExamService = require('../services/exam');
 const config = require('../config');
 
-router.get('/info', function(req, res, next) {
+router.get('/invite', function(req, res, next) {
   const data = {
     status: config.invitation_status.SENT,
     name: 'Silas',
@@ -23,6 +23,16 @@ router.get('/info', function(req, res, next) {
       throw err
     });
 });
+
+router.get('/info', (req, res) => {
+  ExamService.getAllInvitations()
+    .then(
+      data => {
+        return res.json(data);
+      }
+    )
+});
+
 
 router.post('/invite', function(req, res, next) {
   ExamService.generateQuestions()
