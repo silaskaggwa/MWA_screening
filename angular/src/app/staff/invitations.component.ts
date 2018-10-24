@@ -19,7 +19,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   
   newName: string = '';
   newEmail: string = '';
-  newStatus: string = 'Pending';
+  //newStatus: string = 'Pending';
 
   dataSource: studentInfo[];
   addApplicant: boolean = false;
@@ -27,25 +27,32 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private invitationsService: InvitationsService){
-    //this.dataSource = invitationsService.retrieveInfo();    
-    this.dataSource = invitationsService.getStudentInfo();
+    
   }
 
   ngOnInit(){
-    this.subscription = this.invitationsService.retrieveInfo()
-      .subscribe((data: studentInfo) => {
-        console.log(data); 
-      })
+    this.getInfo();
   }
  
   unhide(){ this.addApplicant = !this.addApplicant; }
 
+  getInfo() {
+    // console.log('info', this.invitationsService.retrieveInfo());
+    this.invitationsService.retrieveInfo()
+      .subscribe((data:studentInfo[]) => {
+        console.log('student info', data);
+        this.dataSource =data;
+      }, err => { console.log('err', err.message) });
+
+  }
+
   send(){
-    const info = {name: this.newName, email: this.newEmail, status: this.newStatus}
-    console.log(info);
+    const info = { name: this.newName, email: this.newEmail }
+    //console.log(info);
     this.invitationsService.sendInfo(info)
       .subscribe(response =>{
         console.log(response);
+        this.getInfo();
       })
   }
 

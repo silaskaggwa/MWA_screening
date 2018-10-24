@@ -5,7 +5,7 @@ const config = require('../config');
 const createUser = (data) => {
     return new User(data).save();
 }
-const getUserById = (id) => User.getUserById(id);
+const getUserById = (id) => User.findById(id);
 
 const getUser = () => {
    return User.find({}); 
@@ -16,4 +16,9 @@ const deactivateUser = (email) => {
 const activateUser = (email) => {
     return User.update({email:email},{$set:{active:true}});   
  }
-module.exports = {createUser, getUserById,getUser,deactivateUser,activateUser};
+
+const getUserByEmail = (email) => {
+    return User.findOne({email});
+}
+module.exports = {createUser, getUserById,getUser,deactivateUser,activateUser,getUserByEmail};
+

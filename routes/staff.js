@@ -4,7 +4,11 @@ const AuthService = require('../services/authentication');
 const MailService = require('../services/mail');
 const ExamService = require('../services/exam');
 const config = require('../config');
+const path = require('path');
 
+router.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname,'../public/index.html'));
+});
 router.get('/invite', function(req, res, next) {
   const data = {
     status: config.invitation_status.SENT,
@@ -23,6 +27,16 @@ router.get('/invite', function(req, res, next) {
       throw err
     });
 });
+
+router.get('/info', (req, res) => {
+  ExamService.getAllInvitations()
+    .then(
+      data => {
+        return res.json(data);
+      }
+    )
+});
+
 
 router.post('/invite', function(req, res, next) {
   ExamService.generateQuestions()

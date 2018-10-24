@@ -27,4 +27,15 @@ const sendInvitationEmail = (name, email, token) => {
 	create(mailOptions);
 }
 
-module.exports = { create, sendInvitationEmail };
+const sendLoginEmail = (name, email, token) => {
+	mailOptions.to = email;
+	mailOptions.subject = "TAS Screening login "+Math.floor(Math.random()*100);
+	mailOptions.html = `
+		<p>Dear ${name}, </p>
+		<p>Click link to login</p>
+		<a href="${config.host+'/auth/verify/?token='+token}">Click here to start test</a>
+	`;
+	create(mailOptions);
+}
+
+module.exports = { create, sendInvitationEmail, sendLoginEmail };

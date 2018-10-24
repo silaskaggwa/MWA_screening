@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { InterceptorModule } from './interceptor.module';
 import { UnauthorizedComponent } from './unauthorized.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule,MatFormFieldModule,MatInputModule} from '@angular/material';
+import { VerifyComponent } from './verify.component';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
@@ -18,6 +21,7 @@ const APP_ROUTES: Routes = [
   {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
   {path: 'staff', loadChildren: './staff/staff.module#StaffModule'},
   {path: 'unauthorized', component: UnauthorizedComponent},
+  {path: 'verify', component: VerifyComponent},
   {path: '404', component: P404Component},
   {path: '**', redirectTo: '404'}
 ];
@@ -25,7 +29,7 @@ const APP_ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    
+    VerifyComponent,
     HomeComponent,
     P404Component,
     UnauthorizedComponent
@@ -39,7 +43,12 @@ const APP_ROUTES: Routes = [
     MatToolbarModule,
     HttpClientModule,
     HttpModule,
-    InterceptorModule
+    InterceptorModule,
+    MatCardModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
      
   providers: [],

@@ -9,26 +9,26 @@ export class InvitationsService {
   constructor(private http: HttpClient) { }
 
   //For testing
-  studentInfo = [
-    {name: "Alem Embiale", email: "alemwatch@gmail.com", status: "Sent"},
-    {name: "Silas Kaggwa", email: "silas@gmail.com", status: "Sent" },
-    {name: "Tigist Tadesse", email: "tigist@gmail.com", status: "Pending"},
+  // studentInfo = [
+  //   {name: "Alem Embiale", email: "alemwatch@gmail.com", status: "Sent"},
+  //   {name: "Silas Kaggwa", email: "silas@gmail.com", status: "Sent" },
+  //   {name: "Tigist Tadesse", email: "tigist@gmail.com", status: "Pending"},
     
-  ];
+  // ];
 
-  //untile connected to backend
-   getStudentInfo(){
-    return this.studentInfo;
-  }
+  //until connected to backend
+  //  getStudentInfo(){
+  //   return this.studentInfo;
+  // }
 
   retrieveInfo(){
     //console.log("inside retriveInfo");
-    return this.http.get(this.domain+'/info/');
+    return this.http.get(this.domain+'/staff/info');
   }
 
   sendInfo(info){
-    this.studentInfo.push(info);
-    return this.http.post(this.domain+'/staff', info);
+    //this.studentInfo.push(info);
+    return this.http.post(this.domain+'/staff/invite', info);
   }
   
 }
