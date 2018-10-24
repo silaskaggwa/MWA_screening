@@ -11,4 +11,8 @@ const getUser = () => {
    return User.find({});
    
 }
-module.exports = {createUser, getUserById,getUser};
+
+const getUserByEmail = (email) => {
+    return User.findOne({email});
+}
+module.exports = {createUser, getUserById,getUser, getUserByEmail};

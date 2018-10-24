@@ -11,6 +11,7 @@ const config = require('./config');
 const invitationAuth = require('./middleware/authentication').authenticated;
 const staffRouter = require('./routes/staff');
 const examRouter = require('./routes/exam');
+const authRouter = require('./routes/auth');
 
 
 
@@ -52,6 +53,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
+app.use('/auth', cors());
+app.use('/auth', authRouter);
 
 app.use('/staff', cors());
 app.use('/staff', staffRouter);
