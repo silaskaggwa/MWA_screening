@@ -129,12 +129,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _verify_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./verify.component */ "./src/app/verify.component.ts");
+/* harmony import */ var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/snack-bar */ "./node_modules/@angular/material/esm5/snack-bar.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -187,7 +189,8 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_14__["MatFormFieldModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_13__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_13__["ReactiveFormsModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_14__["MatInputModule"]
+                _angular_material__WEBPACK_IMPORTED_MODULE_14__["MatInputModule"],
+                _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_16__["MatSnackBarModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
@@ -213,6 +216,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login.service */ "./src/app/login.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -225,18 +229,31 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(service, router) {
+    function HomeComponent(service, router, snackBar) {
         this.service = service;
         this.router = router;
+        this.snackBar = snackBar;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.service.logOut();
+    };
+    HomeComponent.prototype.openSnackBar = function (message) {
+        var config = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBarConfig"]();
+        config.verticalPosition = 'bottom';
+        config.horizontalPosition = 'center';
+        config.duration = 2000;
+        //config.extraClasses = this.addExtraClass ? ['test'] : undefined;
+        this.snackBar.open(message, 'OK', config);
     };
     HomeComponent.prototype.login = function (email) {
         var _this = this;
         this.service.login(email)
             .subscribe(function (data) {
             _this.router.navigate(['/verify']);
+        }, function (err) {
+            _this.openSnackBar('Email not authorized !');
         });
     };
     HomeComponent = __decorate([
@@ -245,7 +262,7 @@ var HomeComponent = /** @class */ (function () {
             template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        TAS Screening Login\n      </h1>\n      <mat-card class=\"my-card\">\n        <mat-card-content>\n            <form class=\"my-form\">\n              <mat-form-field class=\"full-width\">\n                  <mat-label>Email</mat-label>\n                  <input #myEmail matInput  placeholder=\"Email\" name=\"email\">\n              </mat-form-field>\n            </form>\n        </mat-card-content>\n        <mat-card-actions>\n            <button mat-raised-button (click)=\"login(myEmail.value)\" color=\"primary\">LOGIN</button>\n        </mat-card-actions>\n      </mat-card>\n    </div>\n  ",
             styles: ["\n    div {position: relative; padding: 20%;} h1 {text-align: center;}\n    .my-card {width: 300px; margin: auto;}\n  "]
         }),
-        __metadata("design:paramtypes", [_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        __metadata("design:paramtypes", [_login_service__WEBPACK_IMPORTED_MODULE_1__["LoginService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -336,7 +353,21 @@ var LoginService = /** @class */ (function () {
         this.domain = 'http://localhost:3000';
     }
     LoginService.prototype.login = function (email) {
-        return this.http.post(this.domain + '/auth', { email: email }); //, { withCredentials: true });
+        return this.http.post(this.domain + '/login', { email: email }); //, { withCredentials: true });
+    };
+    LoginService.prototype.getCookie = function (name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match)
+            return match[2];
+    };
+    LoginService.prototype.isAuthorized = function () {
+        if (this.getCookie('id_token')) {
+            return true;
+        }
+        return false;
+    };
+    LoginService.prototype.logOut = function () {
+        document.cookie = 'id_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     };
     LoginService.prototype.getQuestions = function () {
         //console.log('hi get question service');

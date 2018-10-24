@@ -53,6 +53,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
+app.use('/login', cors());
+app.use('/login', authRouter);
+
 app.use('/auth', cors());
 app.use('/auth', invitationAuth);
 app.use('/auth', authRouter);

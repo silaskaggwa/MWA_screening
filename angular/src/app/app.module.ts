@@ -14,12 +14,14 @@ import { UnauthorizedComponent } from './unauthorized.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule,MatFormFieldModule,MatInputModule} from '@angular/material';
 import { VerifyComponent } from './verify.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AdminGuard } from './admin/admin.guard';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
   {path: 'exam', loadChildren: './exam/exam.module#ExamModule'},
-  {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
-  {path: 'staff', loadChildren: './staff/staff.module#StaffModule'},
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [ AdminGuard ]},
+  {path: 'staff', loadChildren: './staff/staff.module#StaffModule', canActivate: [ AdminGuard ]},
   {path: 'unauthorized', component: UnauthorizedComponent},
   {path: 'verify', component: VerifyComponent},
   {path: '404', component: P404Component},
@@ -48,7 +50,8 @@ const APP_ROUTES: Routes = [
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
      
   providers: [],

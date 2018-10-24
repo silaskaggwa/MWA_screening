@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { MatSnackBarConfig, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -37,16 +38,29 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private service: LoginService, private router: Router) { }
+  constructor(private service: LoginService, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.service.logOut();
+  }
+
+  openSnackBar(message) {
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'center';
+    config.duration = 2000;
+    //config.extraClasses = this.addExtraClass ? ['test'] : undefined;
+    this.snackBar.open(message, 'OK', config);
   }
 
   login(email){
     this.service.login(email)
       .subscribe(
-        data => {
+        (data: any) => {
           this.router.navigate(['/verify']);
+        },
+        (err) => {
+          this.openSnackBar('Email not authorized !');
         }
       )
   }

@@ -18,7 +18,7 @@ module.exports = "table {\n  width: 100%;\n}\nlabel{color:green}\n.l-container {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Staff</h2>\n    <form (ngSubmit)=\"createUser(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width\">\n            <mat-label>Name</mat-label>\n            <input ngModel name=\"fname\" #fname=\"ngModel\" matInput placeholder=\"First name\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Email</mat-label>\n            <input ngModel name=\"email\" #fname=\"ngModel\" matInput placeholder=\"Email\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Role</mat-label>\n            <input ngModel name=\"role\" #role=\"ngModel\" matInput placeholder=\"role\" required>\n        </mat-form-field>\n\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n         <!-- Num Column -->\n         <ng-container matColumnDef=\"position\">\n                <th mat-header-cell *matHeaderCellDef> Number </th>\n                <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n            </ng-container>\n    \n        <!-- Name Column -->\n        <ng-container matColumnDef=\"name\">\n            <th mat-header-cell *matHeaderCellDef> Name </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\n        </ng-container>\n\n        <!-- Email Column -->\n        <ng-container matColumnDef=\"email\">\n            <th mat-header-cell *matHeaderCellDef> Email </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.email}} </td>\n        </ng-container>\n\n        <!-- Status Column -->\n        <ng-container matColumnDef=\"role\">\n            <th mat-header-cell *matHeaderCellDef> Role </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.role}} </td>\n        </ng-container>\n\n        <!-- Deactivate Column -->\n        <ng-container matColumnDef=\"status\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                    <md-slide-toggle \n                    ngDefaultControl \n                    (change)=\"onChange($event)\" \n                    [checked]=\"device\"> </md-slide-toggle>\n                  \n            </td>\n        </ng-container>\n\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n    </table>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\">\n            <h2>TAS Screening</h2>\n        </a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/\">Logout</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Staff</h2>\n    <form (ngSubmit)=\"createUser(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width\">\n            <mat-label>Name</mat-label>\n            <input ngModel name=\"fname\" #fname=\"ngModel\" matInput placeholder=\"First name\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Email</mat-label>\n            <input ngModel name=\"email\" #fname=\"ngModel\" matInput placeholder=\"Email\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Role</mat-label>\n            <input ngModel name=\"role\" #role=\"ngModel\" matInput placeholder=\"role\" required>\n        </mat-form-field>\n\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Num Column -->\n        <ng-container matColumnDef=\"position\">\n            <th mat-header-cell *matHeaderCellDef> Number </th>\n            <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n        </ng-container>\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"name\">\n            <th mat-header-cell *matHeaderCellDef> Name </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\n        </ng-container>\n\n        <!-- Email Column -->\n        <ng-container matColumnDef=\"email\">\n            <th mat-header-cell *matHeaderCellDef> Email </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.email}} </td>\n        </ng-container>\n\n        <!-- Status Column -->\n        <ng-container matColumnDef=\"role\">\n            <th mat-header-cell *matHeaderCellDef> Role </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.role}} </td>\n        </ng-container>\n\n        <!-- Deactivate Column -->\n        <ng-container matColumnDef=\"status\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                <mat-slide-toggle [(ngModel)]=\"element.active\" (click)=\"onChange($event)\" onclick=\"return confirm('Are you sure?')\">\n                    {{element.active}}</mat-slide-toggle>\n\n            </td>\n        </ng-container>\n\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n    </table>\n</div>"
 
 /***/ }),
 
@@ -52,26 +52,27 @@ var AdminComponent = /** @class */ (function () {
         this.userService = userService;
         this.dialog = dialog;
         this.arr = [];
-        this.device = true;
+        //device:boolean = true;
+        //to deactivate user
+        this.color = 'accent';
+        this.checked = 1;
+        this.disabled = false;
+        this.device = [];
         this.displayedColumns = ['position', 'name', 'email', 'role', 'status'];
     }
     AdminComponent.prototype.ngOnInit = function () {
         this.getUser();
     };
-    //to deactivate user
     AdminComponent.prototype.onChange = function (value) {
-        if (value.checked == true) {
-            this.device = true;
+        console.log(this);
+        if (value.checked === true) {
+            this.checked = 1;
             console.log(1);
         }
         else {
-            this.device = false;
+            this.checked = 0;
             console.log(0);
         }
-    };
-    AdminComponent.prototype.openDialog = function () {
-        console.log('tg dialog');
-        // this.dialog.open(AddUserComponent);
     };
     AdminComponent.prototype.createUser = function (form) {
         this.arr = form.value;
@@ -118,23 +119,39 @@ var AdminComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminGuard", function() { return AdminGuard; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../login.service */ "./src/app/login.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AdminGuard = /** @class */ (function () {
-    function AdminGuard() {
+    function AdminGuard(router, loginService) {
+        this.router = router;
+        this.loginService = loginService;
     }
     AdminGuard.prototype.canActivate = function (next, state) {
-        return true;
+        var valid = this.loginService.isAuthorized();
+        if (valid)
+            return true;
+        else {
+            this.router.navigate(['']); //, { skipLocationChange: true });
+            return false;
+        }
     };
     AdminGuard = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
-        })
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]])
     ], AdminGuard);
     return AdminGuard;
 }());
@@ -279,7 +296,7 @@ var QuestionService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Question</h2>\n    <form (ngSubmit)=\"addQuestion(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width the-question\">\n            <mat-label>Question</mat-label>\n            <input ngModel name=\"question\" #question=\"ngModel\" matInput placeholder=\"Question\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width the-qn-status\">\n            <mat-label>Status</mat-label>\n\n            <input ngModel name=\"active\" #active=\"ngModel\" matInput placeholder=\"Email\" required>\n            <!-- <mat-slide-toggle value='true'></mat-slide-toggle>-->\n        </mat-form-field>\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Num Column -->\n        <ng-container matColumnDef=\"position\">\n                <th mat-header-cell *matHeaderCellDef> Number </th>\n                <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n            </ng-container>\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"question\">\n            <th mat-header-cell *matHeaderCellDef> Question </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.question}} </td>\n        </ng-container>\n\n         <!-- Created at Column -->\n         <ng-container matColumnDef=\"createdDate\">\n                <th mat-header-cell *matHeaderCellDef> Created Date </th>\n                <td mat-cell *matCellDef=\"let element\"> {{element.created_at}} </td>\n            </ng-container>\n\n        <!-- active Column -->\n        <ng-container matColumnDef=\"active\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                <mat-slide-toggle></mat-slide-toggle>\n            </td>\n        </ng-container>\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    </table>\n</div>\n"
+module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\">\n            <h2>TAS Screening</h2>\n        </a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Question</h2>\n    <form (ngSubmit)=\"addQuestion(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width the-question\">\n            <mat-label>Question</mat-label>\n            <input ngModel name=\"question\" #question=\"ngModel\" matInput placeholder=\"Question\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width the-qn-status\">\n            <mat-label>Status</mat-label>\n\n            <input ngModel name=\"active\" #active=\"ngModel\" matInput placeholder=\"Status\" required>\n            <!-- <mat-slide-toggle value='true'></mat-slide-toggle>-->\n        </mat-form-field>\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Num Column -->\n        <ng-container matColumnDef=\"position\">\n            <th mat-header-cell *matHeaderCellDef> Number </th>\n            <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n        </ng-container>\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"question\">\n            <th mat-header-cell *matHeaderCellDef> Question </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.question}} </td>\n        </ng-container>\n\n        <!-- Created at Column -->\n        <ng-container matColumnDef=\"createdDate\">\n            <th mat-header-cell *matHeaderCellDef> Created Date </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.created_at}} </td>\n        </ng-container>\n\n        <!-- active Column -->\n        <ng-container matColumnDef=\"active\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                    <mat-slide-toggle [(ngModel)]=\"element.active\" (click)=\"onChange($event)\" onclick=\"return confirm('Are you sure?')\">\n                            {{element.active}}</mat-slide-toggle>\n            </td>\n        </ng-container>\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    </table>\n</div>"
 
 /***/ }),
 
@@ -310,10 +327,25 @@ var QuestionsComponent = /** @class */ (function () {
     function QuestionsComponent(questionService) {
         this.questionService = questionService;
         this.arr = [];
+        this.color = 'accent';
+        this.checked = 1;
+        this.disabled = false;
+        this.device = [];
         this.displayedColumns = ['position', 'question', 'createdDate', 'active'];
     }
     QuestionsComponent.prototype.ngOnInit = function () {
         this.getQuestions();
+    };
+    QuestionsComponent.prototype.onChange = function (value) {
+        console.log(this);
+        if (value.checked === true) {
+            this.checked = 1;
+            console.log(1);
+        }
+        else {
+            this.checked = 0;
+            console.log(0);
+        }
     };
     QuestionsComponent.prototype.addQuestion = function (form) {
         this.arr = form.value;

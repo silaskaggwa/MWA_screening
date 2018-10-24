@@ -12,7 +12,23 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   login(email){
-    return this.http.post(this.domain+'/auth',{email});//, { withCredentials: true });
+    return this.http.post(this.domain+'/login',{email});//, { withCredentials: true });
+  }
+
+  getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+  }
+
+  isAuthorized(){
+    if(this.getCookie('id_token')){
+      return true;
+    }
+    return false;
+  }
+
+  logOut(){
+    document.cookie = 'id_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   getQuestions()

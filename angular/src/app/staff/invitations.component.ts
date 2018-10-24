@@ -57,7 +57,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
   displayedColumns: string[] = ['name', 'email', 'status'];
 }
