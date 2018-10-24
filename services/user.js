@@ -8,7 +8,12 @@ const createUser = (data) => {
 const getUserById = (id) => User.getUserById(id);
 
 const getUser = () => {
-   return User.find({});
-   
+   return User.find({}); 
 }
-module.exports = {createUser, getUserById,getUser};
+const deactivateUser = (email) => {
+    return User.update({email:email},{$set:{active:false}});  
+ }
+const activateUser = (email) => {
+    return User.update({email:email},{$set:{active:true}});   
+ }
+module.exports = {createUser, getUserById,getUser,deactivateUser,activateUser};

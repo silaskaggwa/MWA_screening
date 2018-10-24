@@ -25,7 +25,15 @@ router.post('/user/create', function (req, res) {
     console.log('saveUser>>', info)
   }).catch(err => { throw err });
 });
-
+//deactivate user
+router.post('/user/deactivate', function (req, res) {
+  console.log('body>>> ', req.params.email);
+  UserService.deactivateUser({
+    email:  req.params.email
+  }).then((info) => {
+    console.log('deactivate>>', info)
+  }).catch(err => { throw err });
+});
 //admin get user list
 router.get('/user', function (req, res) {
   //console.log('hi form router')
