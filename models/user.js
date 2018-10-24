@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
     updated_at: Date,
 });
 
-UserSchema.pre('save', next => {
+UserSchema.pre('validate', next => {
     const currentDate = new Date();
     this.updated_at = currentDate;
     if(!this.created_at) this.created_at = currentDate;

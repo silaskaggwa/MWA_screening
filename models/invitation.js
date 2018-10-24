@@ -36,7 +36,8 @@ const InvitationSchema = new mongoose.Schema({
     updated_at: Date,
 });
 
-InvitationSchema.pre('save', next => {
+InvitationSchema.pre('validate', next => {
+   
     const currentDate = new Date();
     this.updated_at = currentDate;
     if(!this.created_at) this.created_at = currentDate;

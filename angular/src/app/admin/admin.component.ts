@@ -36,15 +36,7 @@ export class AdminComponent implements OnInit {
   dataSource: User[];
   device:boolean = true;
   //to deactivate user
-  onChange(value) {
-        if (value.checked == true) {
-          this.device = true;
-          console.log(1);
-        } else {
-          this.device = false;
-          console.log(0);
-        }
-    }
+  
   openDialog() {
 
     console.log('tg dialog');
