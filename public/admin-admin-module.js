@@ -18,7 +18,7 @@ module.exports = "table {\n  width: 100%;\n}\nlabel{color:green}\n.l-container {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Staff</h2>\n    <form (ngSubmit)=\"createUser(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width\">\n            <mat-label>Name</mat-label>\n            <input ngModel name=\"fname\" #fname=\"ngModel\" matInput placeholder=\"First name\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Email</mat-label>\n            <input ngModel name=\"email\" #fname=\"ngModel\" matInput placeholder=\"Email\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Role</mat-label>\n            <input ngModel name=\"role\" #role=\"ngModel\" matInput placeholder=\"role\" required>\n        </mat-form-field>\n\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <button mat-icon-button >\n                <mat-icon aria-label=\"Example icon-button with a heart icon\">favorite</mat-icon>\n            </button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"name\">\n            <th mat-header-cell *matHeaderCellDef> Name </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\n        </ng-container>\n\n        <!-- Email Column -->\n        <ng-container matColumnDef=\"email\">\n            <th mat-header-cell *matHeaderCellDef> Email </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.email}} </td>\n        </ng-container>\n\n        <!-- Status Column -->\n        <ng-container matColumnDef=\"role\">\n            <th mat-header-cell *matHeaderCellDef> Role </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.role}} </td>\n        </ng-container>\n\n        <!-- Deactivate Column -->\n        <ng-container matColumnDef=\"status\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                <mat-slide-toggle></mat-slide-toggle>\n            </td>\n        </ng-container>\n\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n    </table>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Staff</h2>\n    <form (ngSubmit)=\"createUser(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width\">\n            <mat-label>Name</mat-label>\n            <input ngModel name=\"fname\" #fname=\"ngModel\" matInput placeholder=\"First name\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Email</mat-label>\n            <input ngModel name=\"email\" #fname=\"ngModel\" matInput placeholder=\"Email\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width\">\n            <mat-label>Role</mat-label>\n            <input ngModel name=\"role\" #role=\"ngModel\" matInput placeholder=\"role\" required>\n        </mat-form-field>\n\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n         <!-- Num Column -->\n         <ng-container matColumnDef=\"position\">\n                <th mat-header-cell *matHeaderCellDef> Number </th>\n                <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n            </ng-container>\n    \n        <!-- Name Column -->\n        <ng-container matColumnDef=\"name\">\n            <th mat-header-cell *matHeaderCellDef> Name </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\n        </ng-container>\n\n        <!-- Email Column -->\n        <ng-container matColumnDef=\"email\">\n            <th mat-header-cell *matHeaderCellDef> Email </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.email}} </td>\n        </ng-container>\n\n        <!-- Status Column -->\n        <ng-container matColumnDef=\"role\">\n            <th mat-header-cell *matHeaderCellDef> Role </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.role}} </td>\n        </ng-container>\n\n        <!-- Deactivate Column -->\n        <ng-container matColumnDef=\"status\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                    <md-slide-toggle \n                    ngDefaultControl \n                    (change)=\"onChange($event)\" \n                    [checked]=\"device\"> </md-slide-toggle>\n                  \n            </td>\n        </ng-container>\n\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n    </table>\n</div>"
 
 /***/ }),
 
@@ -52,10 +52,22 @@ var AdminComponent = /** @class */ (function () {
         this.userService = userService;
         this.dialog = dialog;
         this.arr = [];
-        this.displayedColumns = ['name', 'email', 'role', 'status'];
+        this.device = true;
+        this.displayedColumns = ['position', 'name', 'email', 'role', 'status'];
     }
     AdminComponent.prototype.ngOnInit = function () {
         this.getUser();
+    };
+    //to deactivate user
+    AdminComponent.prototype.onChange = function (value) {
+        if (value.checked == true) {
+            this.device = true;
+            console.log(1);
+        }
+        else {
+            this.device = false;
+            console.log(0);
+        }
     };
     AdminComponent.prototype.openDialog = function () {
         console.log('tg dialog');
@@ -66,6 +78,7 @@ var AdminComponent = /** @class */ (function () {
         this.userService.createUser(this.arr)
             .subscribe(function (resp) { console.log('resp>>', resp); });
         this.msg = "user is saved!";
+        this.getUser();
     };
     AdminComponent.prototype.getUser = function () {
         //console.log('users', this.userService.getUser());
@@ -75,6 +88,9 @@ var AdminComponent = /** @class */ (function () {
             console.log('users data', data);
             _this.dataSource = data;
         }, function (err) { console.log('err', err.message); });
+    };
+    AdminComponent.prototype.deactivateUser = function () {
+        //to deactivate a user
     };
     AdminComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -235,12 +251,13 @@ var QuestionService = /** @class */ (function () {
         this.domain = 'http://localhost:3000';
     }
     QuestionService.prototype.addQuestion = function (data) {
-        console.log('Question service has data-> :' + JSON.stringify(data));
+        //console.log('Question service has data-> :'+JSON.stringify(data));
         return this.http.post(this.domain + '/admin/questions/create', data); //, { withCredentials: true });
     };
     QuestionService.prototype.getQuestions = function () {
         //console.log('hi get question service');
-        return this.http.get(this.domain + '/admin/questions/all'); //, { withCredentials: true });
+        return this.http.get(this.domain + '/admin/questions'); //, { withCredentials: true });
+        //return this.http.get(this.domain+'/admin/questions/all');//, { withCredentials: true });
     };
     QuestionService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -262,7 +279,7 @@ var QuestionService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Question</h2>\n    <form (ngSubmit)=\"addQuestion(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width the-question\">\n            <mat-label>Question</mat-label>\n            <input ngModel name=\"question\" #question=\"ngModel\" matInput placeholder=\"Question\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width the-qn-status\">\n            <mat-label>Status</mat-label>\n\n            <input ngModel name=\"active\" #active=\"ngModel\" matInput placeholder=\"Email\" required>\n            <!-- <mat-slide-toggle value='true'></mat-slide-toggle>-->\n        </mat-form-field>\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"question\">\n            <th mat-header-cell *matHeaderCellDef> Question </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.question}} </td>\n        </ng-container>\n        <!-- active Column -->\n        <ng-container matColumnDef=\"active\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                <mat-slide-toggle></mat-slide-toggle>\n            </td>\n        </ng-container>\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    </table>\n</div>\n"
+module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <a mat-button routerLink=\"/admin\"><h2>TAS Screening</h2></a>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin\">Register User</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/questions\">Question</a>\n        <span class=\"spacer\"></span>\n        <a mat-button routerLink=\"/admin/review\">Review</a>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"l-container\">\n    <h2>Add Question</h2>\n    <form (ngSubmit)=\"addQuestion(f)\" #f=\"ngForm\" class=\"my-form\">\n        <mat-form-field class=\"full-width the-question\">\n            <mat-label>Question</mat-label>\n            <input ngModel name=\"question\" #question=\"ngModel\" matInput placeholder=\"Question\" required>\n        </mat-form-field>\n        <mat-form-field class=\"full-width the-qn-status\">\n            <mat-label>Status</mat-label>\n\n            <input ngModel name=\"active\" #active=\"ngModel\" matInput placeholder=\"Email\" required>\n            <!-- <mat-slide-toggle value='true'></mat-slide-toggle>-->\n        </mat-form-field>\n        <mat-card-actions>\n            <button mat-raised-button color=\"primary\">SAVE</button>\n            <label>{{msg}}</label>\n        </mat-card-actions>\n    </form>\n\n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n        <!-- Num Column -->\n        <ng-container matColumnDef=\"position\">\n                <th mat-header-cell *matHeaderCellDef> Number </th>\n                <td mat-cell *matCellDef=\"let element; let i = index\"> {{i+1}} </td>\n            </ng-container>\n\n        <!-- Name Column -->\n        <ng-container matColumnDef=\"question\">\n            <th mat-header-cell *matHeaderCellDef> Question </th>\n            <td mat-cell *matCellDef=\"let element\"> {{element.question}} </td>\n        </ng-container>\n\n         <!-- Created at Column -->\n         <ng-container matColumnDef=\"createdDate\">\n                <th mat-header-cell *matHeaderCellDef> Created Date </th>\n                <td mat-cell *matCellDef=\"let element\"> {{element.created_at}} </td>\n            </ng-container>\n\n        <!-- active Column -->\n        <ng-container matColumnDef=\"active\">\n            <th mat-header-cell *matHeaderCellDef> Status </th>\n            <td mat-cell *matCellDef=\"let element\">\n                <mat-slide-toggle></mat-slide-toggle>\n            </td>\n        </ng-container>\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    </table>\n</div>\n"
 
 /***/ }),
 
@@ -293,30 +310,31 @@ var QuestionsComponent = /** @class */ (function () {
     function QuestionsComponent(questionService) {
         this.questionService = questionService;
         this.arr = [];
-        this.dataSource = [];
-        this.displayedColumns = ['question', 'active'];
+        this.displayedColumns = ['position', 'question', 'createdDate', 'active'];
     }
     QuestionsComponent.prototype.ngOnInit = function () {
-        this.getAllQuestions();
+        this.getQuestions();
     };
     QuestionsComponent.prototype.addQuestion = function (form) {
         this.arr = form.value;
         console.log('value', JSON.stringify(form.value));
         this.questionService.addQuestion(this.arr).subscribe(function (resp) { return console.log('resp>>', resp); });
         this.msg = '  Question is saved!';
+        this.getQuestions();
     };
-    QuestionsComponent.prototype.getAllQuestions = function () {
+    QuestionsComponent.prototype.getQuestions = function () {
         var _this = this;
         this.questionService.getQuestions()
             .subscribe(function (data) {
+            console.log('questions', data);
             _this.dataSource = data;
-        });
+        }, function (err) { console.log('err', err.message); });
     };
     QuestionsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-question',
             template: __webpack_require__(/*! ./questions.component.html */ "./src/app/admin/questions.component.html"),
-            styles: ["\n    table {width: 100%;} label{color:green} .l-container {margin: 20px 10%;}\n    .the-question {width: 80%;}\n    .the-qn-status {width: 10%;}\n  "]
+            styles: ["\n    table {width: 100%;} table.th{text-align:center, font-weight:bold} label{color:green} .l-container {margin: 50px 10%;}\n    .the-question {width: 50%;}\n    .the-qn-status {width: 20%;}\n  "]
         }),
         __metadata("design:paramtypes", [_question_service__WEBPACK_IMPORTED_MODULE_1__["QuestionService"]])
     ], QuestionsComponent);
@@ -654,47 +672,6 @@ var UserService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], UserService);
     return UserService;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/material.module.ts":
-/*!************************************!*\
-  !*** ./src/app/material.module.ts ***!
-  \************************************/
-/*! exports provided: MyMaterialModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyMaterialModule", function() { return MyMaterialModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/datepicker */ "./node_modules/@angular/material/esm5/datepicker.es5.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-var MyMaterialModule = /** @class */ (function () {
-    function MyMaterialModule() {
-    }
-    MyMaterialModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatNativeDateModule"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_2__["MatDatepickerModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatIconModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatToolbarModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatFormFieldModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatInputModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatRadioModule"],],
-            exports: [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatNativeDateModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-                _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_2__["MatDatepickerModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatGridListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatIconModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatSlideToggleModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatTableModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatButtonModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatCheckboxModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatToolbarModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatCardModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatFormFieldModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatInputModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatListModule"], _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatRadioModule"],],
-        })
-    ], MyMaterialModule);
-    return MyMaterialModule;
 }());
 
 

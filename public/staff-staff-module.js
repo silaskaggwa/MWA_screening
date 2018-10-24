@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "table {\n  width: 100%;\n}\n\n.l-container {\n  margin: 0 10%;\n}\n"
 
 /***/ }),
 
@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card-content>\n  <mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n       <span><a href=\"/\">HOME</a></span>\n       <span class=\"spacer\"></span>\n       <a  mat-button  routerLink=\"/logout\">Logout</a>\n    </mat-toolbar-row>\n  </mat-toolbar>\n  \n  <form class=\"my-form\">\n    <div class=\"form-group\">\n      <h2>Invitations</h2>\n      <table class=\"table table-striped\">\n        <tr>\n          <th scope=\"col\"> Name </th>\n          <th scope=\"col\"> Email </th>\n          <th scope=\"col\"> Status </th>\n        </tr>\n        <tr *ngFor=\"let student of studentInfo\">\n          <td>{{ student.name }}</td>\n          <td>{{ student.email }}</td>\n          <td>{{ student.status }}</td>\n        </tr>\n      </table>\n      <mat-card-actions>\n            <button mat-raised-button (click)=\"unhide()\" color=\"primary\">Send New Invitation</button><br/><br/>\n      </mat-card-actions>\n        \n      <mat-card-content>\n        <form #invitation=\"ngForm\" class=\"my-form\">\n          <div *ngIf=\"addApplicant\">\n            <mat-form-field class=\"full-width\">\n              <mat-label>Full Name</mat-label>\n              <input  name=\"newName\" type=\"text\" matInput  placeholder=\"Full Name\"  [(ngModel)] = \"newName\"  class=\"form-control\" required>\n            </mat-form-field>\n            <mat-form-field class=\"full-width\">\n              <mat-label>Email</mat-label>\n              <input  name=\"newEmail\" type=\"email\" matInput  placeholder=\"Email\"  [(ngModel)] = \"newEmail\"  class=\"form-control\" required>\n            </mat-form-field>\n            <mat-card-actions>\n              <button mat-raised-button [disabled]=\"invitation.form.invalid\" (click)=\"send()\" color=\"primary\">Send</button>\n            </mat-card-actions>\n          </div>\n        </form> \n      </mat-card-content>\n    </div>\n  </form>\n</mat-card-content>\n"
+module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n      <a mat-button><h2>TAS Screening</h2></a>\n      <a mat-button routerLink=\"/staff\">Staff</a>\n  </mat-toolbar-row>\n</mat-toolbar>\n\n<div class=\"l-container\">\n    <h3>Invitations</h3>\n    <button mat-raised-button (click)=\"unhide()\" color=\"primary\">Send New Invitation</button>\n    <form #invitation=\"ngForm\" class=\"my-form\">\n        <div *ngIf=\"addApplicant\">\n          <mat-form-field class=\"full-width\">\n            <mat-label>Full Name</mat-label>\n            <input  name=\"newName\" type=\"text\" matInput  placeholder=\"Full Name\"  [(ngModel)] = \"newName\"  class=\"form-control\" required>\n          </mat-form-field>\n          <mat-form-field class=\"full-width\">\n            <mat-label>Email</mat-label>\n            <input  name=\"newEmail\" type=\"email\" matInput  placeholder=\"Email\"  [(ngModel)] = \"newEmail\"  class=\"form-control\" required>\n          </mat-form-field>\n          <mat-card-actions>\n            <button mat-raised-button [disabled]=\"invitation.form.invalid\" (click)=\"send()\" color=\"primary\">Send</button>\n          </mat-card-actions>\n        </div>\n    </form> \n    <table mat-table [dataSource]=\"dataSource\" class=\"mat-elevation-z8\">\n\n      <ng-container matColumnDef=\"name\">\n          <th mat-header-cell *matHeaderCellDef> Name </th>\n          <td mat-cell *matCellDef=\"let student\"> {{student.name}} </td>\n      </ng-container>\n\n      \n      <ng-container matColumnDef=\"email\">\n          <th mat-header-cell *matHeaderCellDef> Email </th>\n          <td mat-cell *matCellDef=\"let student\"> {{student.email}} </td>\n      </ng-container>\n\n      \n      <ng-container matColumnDef=\"status\">\n          <th mat-header-cell *matHeaderCellDef> Status </th>\n          <td mat-cell *matCellDef=\"let student\"> {{student.status}} </td>\n      </ng-container>\n   \n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n    </table>\n    \n    <!-- <table class=\"table\">\n      <tr>\n        <th scope=\"col\"> Name </th>\n        <th scope=\"col\"> Email </th>\n        <th scope=\"col\"> Status </th>\n      </tr>\n      <tr *ngFor=\"let student of dataSource\">\n        <td>{{ student.name }}</td>\n        <td>{{ student.email }}</td>\n        <td>{{ student.status }}</td>\n      </tr>\n    </table> -->\n    \n    \n</div>"
 
 /***/ }),
 
@@ -50,24 +50,30 @@ var InvitationsComponent = /** @class */ (function () {
         this.invitationsService = invitationsService;
         this.newName = '';
         this.newEmail = '';
-        this.newStatus = 'Pending';
         this.addApplicant = false;
-        this.studentInfo = invitationsService.retrieveInfo();
-        this.studentInfo = invitationsService.getStudentInfo();
+        this.displayedColumns = ['name', 'email', 'status'];
     }
     InvitationsComponent.prototype.ngOnInit = function () {
-        this.subscription = this.invitationsService.retrieveInfo()
-            .subscribe(function (data) {
-            console.log(data);
-        });
+        this.getInfo();
     };
     InvitationsComponent.prototype.unhide = function () { this.addApplicant = !this.addApplicant; };
+    InvitationsComponent.prototype.getInfo = function () {
+        var _this = this;
+        // console.log('info', this.invitationsService.retrieveInfo());
+        this.invitationsService.retrieveInfo()
+            .subscribe(function (data) {
+            console.log('student info', data);
+            _this.dataSource = data;
+        }, function (err) { console.log('err', err.message); });
+    };
     InvitationsComponent.prototype.send = function () {
-        var info = { name: this.newName, email: this.newEmail, status: this.newStatus };
-        console.log(info);
+        var _this = this;
+        var info = { name: this.newName, email: this.newEmail };
+        //console.log(info);
         this.invitationsService.sendInfo(info)
             .subscribe(function (response) {
             console.log(response);
+            _this.getInfo();
         });
     };
     InvitationsComponent.prototype.ngOnDestroy = function () {
@@ -115,23 +121,23 @@ var InvitationsService = /** @class */ (function () {
     function InvitationsService(http) {
         this.http = http;
         this.domain = 'http://localhost:3000';
-        //For testing
-        this.studentInfo = [
-            { name: "Alem Embiale", email: "alemwatch@gmail.com", status: "Sent" },
-            { name: "Silas Kaggwa", email: "silas@gmail.com", status: "Sent" },
-            { name: "Tigist Tadesse", email: "tigist@gmail.com", status: "Pending" },
-        ];
     }
-    //untile connected to backend
-    InvitationsService.prototype.getStudentInfo = function () {
-        return this.studentInfo;
-    };
+    //For testing
+    // studentInfo = [
+    //   {name: "Alem Embiale", email: "alemwatch@gmail.com", status: "Sent"},
+    //   {name: "Silas Kaggwa", email: "silas@gmail.com", status: "Sent" },
+    //   {name: "Tigist Tadesse", email: "tigist@gmail.com", status: "Pending"},
+    // ];
+    //until connected to backend
+    //  getStudentInfo(){
+    //   return this.studentInfo;
+    // }
     InvitationsService.prototype.retrieveInfo = function () {
         //console.log("inside retriveInfo");
-        return this.http.get(this.domain + '/info/');
+        return this.http.get(this.domain + '/staff/info');
     };
     InvitationsService.prototype.sendInfo = function (info) {
-        this.studentInfo.push(info);
+        //this.studentInfo.push(info);
         return this.http.post(this.domain + '/staff/invite', info);
     };
     InvitationsService = __decorate([
@@ -163,12 +169,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _invitations_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./invitations.component */ "./src/app/staff/invitations.component.ts");
 /* harmony import */ var _invitations_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./invitations.service */ "./src/app/staff/invitations.service.ts");
+/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../material.module */ "./src/app/material.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -200,7 +208,8 @@ var StaffModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatInputModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatListModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatRadioModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatButtonModule"]
+                _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatButtonModule"],
+                _material_module__WEBPACK_IMPORTED_MODULE_7__["MyMaterialModule"]
             ],
             providers: [_invitations_service__WEBPACK_IMPORTED_MODULE_6__["InvitationsService"]],
             declarations: [
