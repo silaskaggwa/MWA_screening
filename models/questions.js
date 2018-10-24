@@ -7,7 +7,8 @@ const QuestionSchema = new mongoose.Schema({
     updated_at: Date,
 });
 
-QuestionSchema.pre('save', next => {
+QuestionSchema.pre('validate', next => {
+    console.log('date?');
     const currentDate = new Date();
     this.updated_at = currentDate;
     if(!this.created_at) this.created_at = currentDate;
