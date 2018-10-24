@@ -5,7 +5,7 @@ const config = require('../config');
 const createUser = (data) => {
     return new User(data).save();
 }
-const getUserById = (id) => User.getUserById(id);
+const getUserById = (id) => User.findById(id);
 
 const getUser = () => {
    return User.find({});

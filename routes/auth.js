@@ -3,6 +3,7 @@ const router = express.Router();
 const UserService = require('../services/user');
 const MailService = require('../services/mail');
 const AuthService = require('../services/authentication');
+const config = require('../config');
 
 router.post('/', (req, res) => {
     UserService.getUserByEmail(req.body.email)
