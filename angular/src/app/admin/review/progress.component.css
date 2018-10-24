@@ -1,0 +1,44 @@
+.center-content{
+    display: flex;
+    align-items: center;
+}
+.code-input {
+    width: 100%;
+    background: url(http://i.imgur.com/2cOaJ.png);
+    background-attachment: local;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    padding-top: 10px;
+    font-family: monospace;
+    box-sizing: border-box;
+    color: #982b2b !important;
+    border: 1px solid gray !important;
+    height: 450px !important;
+}
+.qn-answer {
+    margin: 20px 10%;
+}
+.fab-container {
+    display: inline;
+    box-sizing: border-box;
+    overflow: auto;
+    position: fixed;
+    bottom: 30px;
+    padding: 10px;
+}
+.fab-container.right {
+    right: 30px;
+}
+.fab-container.left {
+    left: 30px;
+}
+.fab-container .with-time{
+    font-size: 14px;
+}
+.fab-container button {
+    display: block;
+    margin-top: 10px;
+}
+.user-info {
+    margin: 10px 0 30px;
+}

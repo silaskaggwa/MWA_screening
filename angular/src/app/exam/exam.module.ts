@@ -18,6 +18,7 @@ import { NgReduxModule, NgRedux } from '@angular-redux/store';
 import { rootReducer, IAppState, INITIAL_STATE } from './redux/exam.store';
 import { ExamService } from './exam.service';
 import { EndedComponent } from './ended.component';
+import { MatToolbarModule } from '@angular/material';
 
 
 export const EXAM_ROUTES = [
@@ -31,6 +32,7 @@ export const EXAM_ROUTES = [
     RouterModule.forChild(EXAM_ROUTES),
     MatCardModule,
     FlexLayoutModule,
+    MatToolbarModule,
     MatInputModule,
     MatProgressBarModule,
     FormsModule,

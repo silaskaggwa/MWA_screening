@@ -8,9 +8,22 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./admin/admin.module": [
+		"./src/app/admin/admin.module.ts",
+		"default~admin-admin-module~exam-exam-module~staff-staff-module",
+		"default~admin-admin-module~staff-staff-module",
+		"admin-admin-module"
+	],
 	"./exam/exam.module": [
 		"./src/app/exam/exam.module.ts",
+		"default~admin-admin-module~exam-exam-module~staff-staff-module",
 		"exam-exam-module"
+	],
+	"./staff/staff.module": [
+		"./src/app/staff/staff.module.ts",
+		"default~admin-admin-module~exam-exam-module~staff-staff-module",
+		"default~admin-admin-module~staff-staff-module",
+		"staff-staff-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -22,7 +35,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var id = ids[0];
 		return __webpack_require__(id);
 	});
@@ -114,6 +127,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _interceptor_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./interceptor.module */ "./src/app/interceptor.module.ts");
+/* harmony import */ var _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./unauthorized.component */ "./src/app/unauthorized.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -131,21 +146,28 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 var APP_ROUTES = [
     { path: '', component: _home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"] },
     { path: 'exam', loadChildren: './exam/exam.module#ExamModule' },
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+    { path: 'staff', loadChildren: './staff/staff.module#StaffModule' },
+    { path: 'unauthorized', component: _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__["UnauthorizedComponent"] },
     { path: '404', component: _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"] },
     { path: '**', redirectTo: '404' }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
+        this.title = 'TAS';
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
                 _home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"],
-                _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"]
+                _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"],
+                _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__["UnauthorizedComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -154,7 +176,8 @@ var AppModule = /** @class */ (function () {
                 _angular_flex_layout__WEBPACK_IMPORTED_MODULE_8__["FlexLayoutModule"],
                 _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_7__["MatToolbarModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClientModule"],
-                _angular_http__WEBPACK_IMPORTED_MODULE_10__["HttpModule"]
+                _angular_http__WEBPACK_IMPORTED_MODULE_10__["HttpModule"],
+                _interceptor_module__WEBPACK_IMPORTED_MODULE_11__["InterceptorModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
@@ -196,12 +219,65 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home',
-            template: "\n    <p>\n      home works!\n    </p>\n  ",
-            styles: []
+            template: "\n    <div>\n      <h1>\n        TAS Screening\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
     ], HomeComponent);
     return HomeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/interceptor.module.ts":
+/*!***************************************!*\
+  !*** ./src/app/interceptor.module.ts ***!
+  \***************************************/
+/*! exports provided: HttpsRequestInterceptor, InterceptorModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpsRequestInterceptor", function() { return HttpsRequestInterceptor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InterceptorModule", function() { return InterceptorModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var HttpsRequestInterceptor = /** @class */ (function () {
+    function HttpsRequestInterceptor() {
+    }
+    HttpsRequestInterceptor.prototype.intercept = function (req, next) {
+        var dupReq = req.clone({ headers: req.headers.set('app_origin', location.origin) });
+        return next.handle(dupReq);
+    };
+    HttpsRequestInterceptor = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
+    ], HttpsRequestInterceptor);
+    return HttpsRequestInterceptor;
+}());
+
+;
+var InterceptorModule = /** @class */ (function () {
+    function InterceptorModule() {
+    }
+    InterceptorModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            providers: [
+                { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HTTP_INTERCEPTORS"], useClass: HttpsRequestInterceptor, multi: true }
+            ],
+            bootstrap: []
+        })
+    ], InterceptorModule);
+    return InterceptorModule;
 }());
 
 
@@ -237,12 +313,53 @@ var P404Component = /** @class */ (function () {
     P404Component = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-p404',
-            template: "\n    <p>\n      p404 works!\n    </p>\n  ",
-            styles: []
+            template: "\n    <div>\n      <h1>\n        404 Not Found !\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
     ], P404Component);
     return P404Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/unauthorized.component.ts":
+/*!*******************************************!*\
+  !*** ./src/app/unauthorized.component.ts ***!
+  \*******************************************/
+/*! exports provided: UnauthorizedComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UnauthorizedComponent", function() { return UnauthorizedComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var UnauthorizedComponent = /** @class */ (function () {
+    function UnauthorizedComponent() {
+    }
+    UnauthorizedComponent.prototype.ngOnInit = function () {
+    };
+    UnauthorizedComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-unauthorized',
+            template: "\n    <div>\n      <h1>\n        UNAUTHORIZED !\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
+        }),
+        __metadata("design:paramtypes", [])
+    ], UnauthorizedComponent);
+    return UnauthorizedComponent;
 }());
 
 

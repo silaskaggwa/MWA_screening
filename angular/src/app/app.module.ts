@@ -9,12 +9,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { InterceptorModule } from './interceptor.module';
+import { UnauthorizedComponent } from './unauthorized.component';
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent},
   {path: 'exam', loadChildren: './exam/exam.module#ExamModule'},
   {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
   {path: 'staff', loadChildren: './staff/staff.module#StaffModule'},
+  {path: 'unauthorized', component: UnauthorizedComponent},
   {path: '404', component: P404Component},
   {path: '**', redirectTo: '404'}
 ];
@@ -24,19 +27,19 @@ const APP_ROUTES: Routes = [
     AppComponent,
     
     HomeComponent,
-    P404Component
+    P404Component,
+    UnauthorizedComponent
   ],
   
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     BrowserAnimationsModule,
-    RouterModule.forRoot(APP_ROUTES),
-    BrowserAnimationsModule,
     FlexLayoutModule,
     MatToolbarModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    InterceptorModule
   ],
      
   providers: [],

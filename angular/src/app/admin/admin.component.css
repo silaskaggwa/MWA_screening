@@ -1,6 +1,5 @@
-
-
-  table {
-    width: 70%;
-  }
-  label{color:green}
+table {
+  width: 100%;
+}
+label{color:green}
+.l-container {margin: 20px 10%;}
