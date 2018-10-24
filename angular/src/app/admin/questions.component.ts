@@ -4,6 +4,7 @@ import { QuestionService } from './question.service';
 
 export interface Question {
   question: string;
+  created_at: Date;
   active: boolean;
 }
 
@@ -11,9 +12,9 @@ export interface Question {
   selector: 'app-question',
   templateUrl: './questions.component.html',
   styles: [`
-    table {width: 100%;} label{color:green} .l-container {margin: 20px 10%;}
-    .the-question {width: 80%;}
-    .the-qn-status {width: 10%;}
+    table {width: 100%;} table.th{text-align:center, font-weight:bold} label{color:green} .l-container {margin: 50px 10%;}
+    .the-question {width: 50%;}
+    .the-qn-status {width: 20%;}
   `]
 })
 export class QuestionsComponent implements OnInit {
@@ -33,6 +34,7 @@ export class QuestionsComponent implements OnInit {
       resp => console.log('resp>>', resp)
     )
     this.msg = '  Question is saved!';
+    this.getQuestions();
   }
   getQuestions() {
     this.questionService.getQuestions()
@@ -41,6 +43,6 @@ export class QuestionsComponent implements OnInit {
         this.dataSource = data;
       }, err => { console.log('err', err.message) });
   }
-  displayedColumns: string[] = ['question', 'active'];
-  // dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['position','question','createdDate', 'active'];
+
 }

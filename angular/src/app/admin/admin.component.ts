@@ -34,6 +34,17 @@ export class AdminComponent implements OnInit {
   arr: any[] = [];
   msg: string;
   dataSource: User[];
+  device:boolean = true;
+  //to deactivate user
+  onChange(value) {
+        if (value.checked == true) {
+          this.device = true;
+          console.log(1);
+        } else {
+          this.device = false;
+          console.log(0);
+        }
+    }
   openDialog() {
 
     console.log('tg dialog');
@@ -45,6 +56,7 @@ export class AdminComponent implements OnInit {
     this.userService.createUser(this.arr)
       .subscribe(resp => { console.log('resp>>', resp) })
     this.msg = "user is saved!";
+    this.getUser();
   }
   getUser() {
     //console.log('users', this.userService.getUser());
@@ -56,8 +68,12 @@ export class AdminComponent implements OnInit {
       }, err => { console.log('err', err.message) });
 
   }
+  deactivateUser()
+  {
+    //to deactivate a user
+  }
 
-  displayedColumns: string[] = ['name', 'email', 'role', 'status'];
+  displayedColumns: string[] = ['position','name', 'email', 'role', 'status'];
  // dataSource = ELEMENT_DATA;
 
 }
