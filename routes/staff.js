@@ -10,7 +10,7 @@ router.get('/invite', function(req, res, next) {
     status: config.invitation_status.SENT,
     name: 'Silas',
     email: 'silakag@gmail.com',
-    questions: ExamService.generateQuestions()
+    questions: ExamService.generateQuestionsXjt()
   };
   ExamService.createInvitation(data)
     .then(invitation => {
@@ -23,24 +23,36 @@ router.get('/invite', function(req, res, next) {
       throw err
     });
 });
+
 router.post('/invite', function(req, res, next) {
-  console.log('gsfhdf>>', req.body)
-  const data = {
-    status: config.invitation_status.SENT,
-    name: req.body.name,
-    email: req.body.email,
-    questions: ExamService.generateQuestions()
-  };
-  ExamService.createInvitation(data)
-    .then(invitation => {
-      AuthService.generate({id: invitation._id}).then(token => {
-        MailService.sendInvitationEmail(invitation.name, invitation.email, token);
-      });
-      res.status(200).json({success: true});
+  ExamService.generateQuestions()
+    .then(questions => {
+      console.log('qnn>>',questions);
+      const data = {
+        status: config.invitation_status.SENT,
+        name: req.body.name,
+        email: req.body.email,
+        questions: questions.map(qn => {
+          return {_id: qn._id, question: qn.question, duration: 0}
+        })
+      };
+      ExamService.createInvitation(data)
+        .then(invitation => {
+          AuthService.generate({id: invitation._id}).then(token => {
+            MailService.sendInvitationEmail(invitation.name, invitation.email, token);
+          });
+          res.status(200).json({success: true});
+        })
+        .catch(err => {
+          throw err
+        });
     })
     .catch(err => {
-      throw err
+      console.log("bigaanye");
+      throw err;
     });
+  
+  
 });
 
 module.exports = router;

@@ -19,8 +19,8 @@ export class QuestionService {
 
   getQuestions()
   {
-    console.log('hi get question service');
-   // return this.http.get(this.domain+'/admin/user/details');//, { withCredentials: true });
+    //console.log('hi get question service');
+    return this.http.get(this.domain+'/admin/questions/all');//, { withCredentials: true });
   }
  
 }

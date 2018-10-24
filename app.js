@@ -66,7 +66,7 @@ app.use('/admin', adminRouter);
 app.use('/progress', cors(corsOptions));
 app.use('/progress', invitationAuth);
 app.use('/progress', (req, res, next) => {
-  if(!req.user) return res.status(401).end('Unauthorized');
+  if(!req.user) return res.status(401).json({status: 'unauthorized'});
   next();
 });
 app.use('/progress', examRouter);

@@ -1617,8 +1617,8 @@ var EndedComponent = /** @class */ (function () {
     EndedComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-ended',
-            template: "\n    <h1>\n      Exam Ended !\n    </h1>\n  ",
-            styles: []
+            template: "\n    <div>\n      <h1>\n        Exam Ended !\n      </h1>\n    </div>\n  ",
+            styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
     ], EndedComponent);
@@ -1647,7 +1647,7 @@ module.exports = ".container{\n    margin-top: 20px;\n    margin-bottom: 20px;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" fxLayout=\"row\" fxLayoutGap=\"20px\" fxLayoutAlign=\"center\">\n    <div fxFlex=70% class=\"exam-card\">\n        <div fxLayout=\"row\">\n                <mat-chip-list>\n                    <mat-chip color=\"primary\" selected>\n                        <mat-icon>person</mat-icon>\n                        {{student_name}}\n                    </mat-chip>\n                    <mat-chip color=\"accent\" selected>\n                        <mat-icon>email</mat-icon>\n                        {{student_email}}\n                    </mat-chip>\n                    <mat-chip color=\"warn\" selected>\n                        <mat-icon>timer</mat-icon>\n                        {{time_remaining}}\n                    </mat-chip>\n                </mat-chip-list>\n        </div>\n        <mat-progress-bar mode=\"indeterminate\" *ngIf=\"show_loader\"></mat-progress-bar>\n\n        <app-question class=\"exam-form\" *ngFor=\"let qn of questions\" [question]=\"qn\" ></app-question>\n        \n        <div fxLayout=\"row\" class=\"exam-footer\">\n            <button mat-raised-button>Submit</button>\n        </div>\n    </div>\n</div>"
+module.exports = "<div class=\"container\" fxLayout=\"row\" fxLayoutGap=\"20px\" fxLayoutAlign=\"center\">\n    <div fxFlex=70% class=\"exam-card\">\n        <div fxLayout=\"row\">\n                <mat-chip-list>\n                    <mat-chip color=\"primary\" selected>\n                        <mat-icon>person</mat-icon>\n                        {{student_name}}\n                    </mat-chip>\n                    <mat-chip color=\"accent\" selected>\n                        <mat-icon>email</mat-icon>\n                        {{student_email}}\n                    </mat-chip>\n                    <mat-chip color=\"warn\" selected>\n                        <mat-icon>timer</mat-icon>\n                        {{time_remaining}}\n                    </mat-chip>\n                </mat-chip-list>\n        </div>\n        <mat-progress-bar mode=\"indeterminate\" *ngIf=\"show_loader\"></mat-progress-bar>\n\n        <app-question class=\"exam-form\" *ngFor=\"let qn of questions\" [question]=\"qn\" ></app-question>\n        \n        <div fxLayout=\"row\" class=\"exam-footer\" *ngIf=\"!show_loader\">\n            <button mat-raised-button (click)=\"submitAnswer()\">Submit</button>\n        </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -1711,7 +1711,7 @@ var ExamComponent = /** @class */ (function () {
                 _this.ngRedux.dispatch({ type: _redux_exam_actions__WEBPACK_IMPORTED_MODULE_2__["INCREMENT_TIME_USED"], increment: 1 });
                 _this.time_remaining = timeRemaining;
             }
-        }, 1000); // 60000);
+        }, 60000);
     };
     ExamComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1725,23 +1725,36 @@ var ExamComponent = /** @class */ (function () {
         });
         this.retrieveExamSubscription = this.examService.retrieveExam()
             .subscribe(function (data) {
-            _this.student_name = data.name;
-            _this.student_email = data.email;
-            _this.questions = data.questions;
-            _this.time_used = data.time_used;
-            _this.time_away = data.time_away;
-            _this.duration = 15; //data.duration;
-            _this.time_remaining = data.duration - _this.time_used;
-            _this.ngRedux.dispatch({ type: _redux_exam_actions__WEBPACK_IMPORTED_MODULE_2__["SET_INVITATION_ID"], invitation_id: data.id });
-            _this.show_loader = false;
-            _this.theTimer = _this.startTimer();
-            if (_this.time_remaining > 0) {
-                _this.exam_ended.next(false);
+            if (data.status == 'ended') {
+                _this.router.navigate(['/exam/ended']);
+            }
+            else if (data.status == 'unauthorized') {
+                _this.router.navigate(['/unauthorized']);
             }
             else {
-                _this.exam_ended.next(true);
+                _this.student_name = data.name;
+                _this.student_email = data.email;
+                _this.questions = data.questions;
+                _this.time_used = data.time_used;
+                _this.time_away = data.time_away;
+                _this.duration = data.duration;
+                _this.time_remaining = data.duration - data.time_used;
+                _this.ngRedux.dispatch({ type: _redux_exam_actions__WEBPACK_IMPORTED_MODULE_2__["SET_INVITATION_ID"], invitation_id: data.id });
+                _this.show_loader = false;
+                _this.theTimer = _this.startTimer();
+                if (_this.time_remaining > 0) {
+                    _this.exam_ended.next(false);
+                }
+                else {
+                    _this.exam_ended.next(true);
+                }
             }
+        }, function (err) {
+            _this.router.navigate(['/unauthorized']);
         });
+    };
+    ExamComponent.prototype.submitAnswer = function () {
+        this.lockExam();
     };
     ExamComponent.prototype.killTimer = function () {
         clearInterval(this.theTimer);
@@ -1752,9 +1765,17 @@ var ExamComponent = /** @class */ (function () {
     };
     ExamComponent.prototype.lockExam = function () {
         var _this = this;
+        this.show_loader = true;
         setTimeout(function () {
-            _this.router.navigate(['/exam/ended']);
-        }, 1000);
+            //this.router.navigate(['/exam/ended']);
+            _this.examService.endExam()
+                .subscribe(function (data) {
+                if (data.status == 'ended') {
+                    _this.show_loader = false;
+                    _this.router.navigate(['/exam/ended']);
+                }
+            });
+        }, 500);
     };
     ExamComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1947,6 +1968,12 @@ var ExamService = /** @class */ (function () {
         var time_away = this.ngRedux.getState().time_away;
         var time_used = this.ngRedux.getState().time_used;
         return this.http.patch(this.domain + '/progress', { qn_id: qn_id, snapshot: snapshot, qn_duration: qn_duration, time_used: time_used, time_away: time_away }, { withCredentials: true });
+    };
+    ExamService.prototype.endExam = function () {
+        var time_away = this.ngRedux.getState().time_away;
+        var time_used = this.ngRedux.getState().time_used;
+        var submit = true;
+        return this.http.patch(this.domain + '/progress/end', { submit: submit, time_used: time_used, time_away: time_away }, { withCredentials: true });
     };
     ExamService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),

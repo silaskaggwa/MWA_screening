@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-ended',
   template: `
-    <h1>
-      Exam Ended !
-    </h1>
+    <div>
+      <h1>
+        Exam Ended !
+      </h1>
+    </div>
   `,
-  styles: []
+  styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
 })
 export class EndedComponent implements OnInit {
 
