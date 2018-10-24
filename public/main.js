@@ -45,6 +45,58 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "./src/app/admin/admin.guard.ts":
+/*!**************************************!*\
+  !*** ./src/app/admin/admin.guard.ts ***!
+  \**************************************/
+/*! exports provided: AdminGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminGuard", function() { return AdminGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../login.service */ "./src/app/login.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AdminGuard = /** @class */ (function () {
+    function AdminGuard(router, loginService) {
+        this.router = router;
+        this.loginService = loginService;
+    }
+    AdminGuard.prototype.canActivate = function (next, state) {
+        var valid = this.loginService.isAuthorized();
+        if (valid)
+            return true;
+        else {
+            this.router.navigate(['']); //, { skipLocationChange: true });
+            return false;
+        }
+    };
+    AdminGuard = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]])
+    ], AdminGuard);
+    return AdminGuard;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/app.component.css":
 /*!***********************************!*\
   !*** ./src/app/app.component.css ***!
@@ -130,6 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _verify_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./verify.component */ "./src/app/verify.component.ts");
 /* harmony import */ var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/snack-bar */ "./node_modules/@angular/material/esm5/snack-bar.es5.js");
+/* harmony import */ var _admin_admin_guard__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./admin/admin.guard */ "./src/app/admin/admin.guard.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -153,11 +206,12 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var APP_ROUTES = [
     { path: '', component: _home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"] },
     { path: 'exam', loadChildren: './exam/exam.module#ExamModule' },
-    { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-    { path: 'staff', loadChildren: './staff/staff.module#StaffModule' },
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [_admin_admin_guard__WEBPACK_IMPORTED_MODULE_17__["AdminGuard"]] },
+    { path: 'staff', loadChildren: './staff/staff.module#StaffModule', canActivate: [_admin_admin_guard__WEBPACK_IMPORTED_MODULE_17__["AdminGuard"]] },
     { path: 'unauthorized', component: _unauthorized_component__WEBPACK_IMPORTED_MODULE_12__["UnauthorizedComponent"] },
     { path: 'verify', component: _verify_component__WEBPACK_IMPORTED_MODULE_15__["VerifyComponent"] },
     { path: '404', component: _p404_component__WEBPACK_IMPORTED_MODULE_5__["P404Component"] },
