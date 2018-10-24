@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { InvitationsService } from './invitations.service';
 import { Subscription } from 'rxjs';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
 interface studentInfo {
   name: string,
@@ -20,7 +21,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   newEmail: string = '';
   newStatus: string = 'Pending';
 
-  dataSource: studentInfo [];
+  dataSource: studentInfo[];
   addApplicant: boolean = false;
 
   private subscription: Subscription;
@@ -51,6 +52,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
+  displayedColumns: string[] = ['name', 'email', 'status'];
 }
 
 

@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { InvitationsComponent } from './invitations.component';
 import { InvitationsService } from './invitations.service';
+import { MyMaterialModule } from '../material.module';
 
 export const STAFF_ROUTES = [
   {path:'', component: InvitationsComponent}
@@ -28,7 +29,8 @@ export const STAFF_ROUTES = [
     MatInputModule,
     MatListModule,
     MatRadioModule,
-    MatButtonModule
+    MatButtonModule,
+    MyMaterialModule
   ],
   providers: [InvitationsService],
   declarations: [
