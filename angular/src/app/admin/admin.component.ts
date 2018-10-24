@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
   disabled = false;
   device: any = [];
   onChange(value) {
-    console.log('')
+    console.log(this)
     if (value.checked === true) {
       this.checked = 1;
       console.log(1);
@@ -50,12 +50,7 @@ export class AdminComponent implements OnInit {
       console.log(0);
     }
   }
-  openDialog() {
 
-    console.log('tg dialog');
-    // this.dialog.open(AddUserComponent);
-
-  }
   createUser(form: NgForm) {
     this.arr = form.value;
     this.userService.createUser(this.arr)

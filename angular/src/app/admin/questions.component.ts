@@ -27,6 +27,20 @@ export class QuestionsComponent implements OnInit {
   ngOnInit() {
     this.getQuestions();
   }
+  color = 'accent';
+  checked: number = 1;
+  disabled = false;
+  device: any = [];
+  onChange(value) {
+    console.log(this)
+    if (value.checked === true) {
+      this.checked = 1;
+      console.log(1);
+    } else {
+      this.checked = 0;
+      console.log(0);
+    }
+  }
   addQuestion(form: NgForm) {
     this.arr = form.value
     console.log('value', JSON.stringify(form.value));
@@ -43,6 +57,6 @@ export class QuestionsComponent implements OnInit {
         this.dataSource = data;
       }, err => { console.log('err', err.message) });
   }
-  displayedColumns: string[] = ['position','question','createdDate', 'active'];
+  displayedColumns: string[] = ['position', 'question', 'createdDate', 'active'];
 
 }

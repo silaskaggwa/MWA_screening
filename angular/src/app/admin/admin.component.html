@@ -50,7 +50,7 @@
         <!-- Email Column -->
         <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td #myEmail=element.email mat-cell *matCellDef="let element"> {{element.email}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
         <!-- Status Column -->
@@ -63,9 +63,8 @@
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let element">
-                <mat-slide-toggle [(ngModel)]="element.active" 
-                (change)="onChange($event,myEmail.value)"
-                > {{element.active}}</mat-slide-toggle>
+                <mat-slide-toggle [(ngModel)]="element.active" (click)="onChange($event)" onclick="return confirm('Are you sure?')">
+                    {{element.active}}</mat-slide-toggle>
 
             </td>
         </ng-container>
