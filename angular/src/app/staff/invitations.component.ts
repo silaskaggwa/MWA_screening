@@ -40,7 +40,7 @@ export class InvitationsComponent implements OnInit, OnDestroy {
     // console.log('info', this.invitationsService.retrieveInfo());
     this.invitationsService.retrieveInfo()
       .subscribe((data:studentInfo[]) => {
-        console.log('student info', data);
+        //console.log('student info', data);
         this.dataSource =data;
       }, err => { console.log('err', err.message) });
 
