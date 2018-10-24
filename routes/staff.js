@@ -28,7 +28,17 @@ router.get('/invite', function(req, res, next) {
     });
 });
 
-router.post('/', function(req, res, next) {
+router.get('/info', (req, res) => {
+  ExamService.getAllInvitations()
+    .then(
+      data => {
+        return res.json(data);
+      }
+    )
+});
+
+
+router.post('/invite', function(req, res, next) {
   ExamService.generateQuestions()
     .then(questions => {
       console.log('qnn>>',questions);
