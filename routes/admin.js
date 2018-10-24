@@ -49,6 +49,15 @@ router.post('/questions/create', function (req, res) {
     return res.json({status: 'success'})
   }).catch(err => { throw err });
 });
+//admin get question list
+router.get('/questions', function (req, res) {
+  console.log(' hi  cookies>>> ', req.cookies.id_token);
+  ExamService.getQuestions()
+    .then(data => {
+      res.json(data);
+    });
+  
+});
 
 router.get('/questions/all', function (req, res) {
 

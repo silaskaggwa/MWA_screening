@@ -54,5 +54,3 @@ export class InvitationsComponent implements OnInit, OnDestroy {
   }
   displayedColumns: string[] = ['name', 'email', 'status'];
 }
-
-

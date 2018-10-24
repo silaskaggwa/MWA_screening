@@ -13,14 +13,16 @@ export class QuestionService {
 
   addQuestion(data){
 
-      console.log('Question service has data-> :'+JSON.stringify(data));
+      //console.log('Question service has data-> :'+JSON.stringify(data));
       return this.http.post(this.domain+'/admin/questions/create',data);//, { withCredentials: true });
   }
 
   getQuestions()
   {
     //console.log('hi get question service');
-    return this.http.get(this.domain+'/admin/questions/all');//, { withCredentials: true });
+    return this.http.get(this.domain+'/admin/questions');//, { withCredentials: true });
+
+    //return this.http.get(this.domain+'/admin/questions/all');//, { withCredentials: true });
   }
  
 }

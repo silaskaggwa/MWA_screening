@@ -7,7 +7,12 @@ const createQuestion = (data) => {
     //console.log('createQuestion');
     return new Question(data).save();
 }
-
+//save new question
+const getQuestions = (data) => {
+    //console.log('createQuestion');
+    return Question.find({});
+   
+}
 const createInvitation = (data) => {
     return new Invitation(data).save();
 }
@@ -126,6 +131,7 @@ const addProgress = (id, data) => {
     });
 }
 
+
 const getAnsweredInvitations = () => {
     return Invitation.find(
         {status: config.invitation_status.ANSWERED},
@@ -133,4 +139,5 @@ const getAnsweredInvitations = () => {
     ).sort({updated_at: 1});
 }
 
-module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations, generateQuestionsXjt, getAllQuestions};
+module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations, generateQuestionsXjt, getAllQuestions, getQuestions};
+

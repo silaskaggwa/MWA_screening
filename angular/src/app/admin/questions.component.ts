@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { QuestionService } from './question.service';
-export interface PeriodicElement {
+
+export interface Question {
   question: string;
   active: boolean;
 }
@@ -18,12 +19,12 @@ export interface PeriodicElement {
 export class QuestionsComponent implements OnInit {
   arr: any[] = [];
   msg: string;
-  dataSource: any[] = [];
-  displayedColumns: string[] = ['question', 'active'];
+
+  dataSource: Question[];
   constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
-    this.getAllQuestions();
+    this.getQuestions();
   }
   addQuestion(form: NgForm) {
     this.arr = form.value
@@ -33,13 +34,13 @@ export class QuestionsComponent implements OnInit {
     )
     this.msg = '  Question is saved!';
   }
-
-  getAllQuestions(){
+  getQuestions() {
     this.questionService.getQuestions()
-      .subscribe((data: any) => {
+      .subscribe((data: Question[]) => {
+        console.log('questions', data);
         this.dataSource = data;
-      })
+      }, err => { console.log('err', err.message) });
   }
-  
-  //dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['question', 'active'];
+  // dataSource = ELEMENT_DATA;
 }
