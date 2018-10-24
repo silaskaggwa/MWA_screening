@@ -21,11 +21,11 @@ const ELEMENT_DATA: Question[] = [
 export class QuestionsComponent implements OnInit {
   arr: any[] = [];
   msg: string;
-  dataSource : Question[];
-  constructor(private questionService: QuestionService) { }
+  dataSource: Question[];
+  constructor(private questionService: QuestionService) {  this.getQuestions();}
 
   ngOnInit() {
-    this.getQuestions();
+   
   }
   addQuestion(form: NgForm) {
     this.arr = form.value
@@ -35,14 +35,13 @@ export class QuestionsComponent implements OnInit {
     )
     this.msg = '  Question is saved!';
   }
-  getQuestions()
-  {
+  getQuestions() {
     this.questionService.getQuestions()
-      .subscribe((data:Question[]) => {
+      .subscribe((data: Question[]) => {
         console.log('questions', data);
-        this.dataSource =data;
+        this.dataSource = data;
       }, err => { console.log('err', err.message) });
   }
   displayedColumns: string[] = ['question', 'active'];
- // dataSource = ELEMENT_DATA;
+  // dataSource = ELEMENT_DATA;
 }
