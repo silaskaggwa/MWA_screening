@@ -1647,7 +1647,7 @@ module.exports = ".container{\n    margin-top: 20px;\n    margin-bottom: 20px;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" fxLayout=\"row\" fxLayoutGap=\"20px\" fxLayoutAlign=\"center\">\n    <div fxFlex=70% class=\"exam-card\">\n        <div fxLayout=\"row\">\n                <mat-chip-list>\n                    <mat-chip color=\"primary\" selected>\n                        <mat-icon>person</mat-icon>\n                        {{student_name}}\n                    </mat-chip>\n                    <mat-chip color=\"accent\" selected>\n                        <mat-icon>email</mat-icon>\n                        {{student_email}}\n                    </mat-chip>\n                    <mat-chip color=\"warn\" selected>\n                        <mat-icon>timer</mat-icon>\n                        {{time_remaining}}\n                    </mat-chip>\n                </mat-chip-list>\n        </div>\n        <mat-progress-bar mode=\"indeterminate\" *ngIf=\"show_loader\"></mat-progress-bar>\n\n        <app-question class=\"exam-form\" *ngFor=\"let qn of questions\" [question]=\"qn\" ></app-question>\n        \n        <div fxLayout=\"row\" class=\"exam-footer\" *ngIf=\"!show_loader\">\n            <button mat-raised-button (click)=\"submitAnswer()\">Submit</button>\n        </div>\n    </div>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n    <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n    </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"container\" fxLayout=\"row\" fxLayoutGap=\"20px\" fxLayoutAlign=\"center\">\n    <div fxFlex=70% class=\"exam-card\">\n        <div fxLayout=\"row\">\n                <mat-chip-list>\n                    <mat-chip color=\"primary\" selected>\n                        <mat-icon>person</mat-icon>\n                        {{student_name}}\n                    </mat-chip>\n                    <mat-chip color=\"accent\" selected>\n                        <mat-icon>email</mat-icon>\n                        {{student_email}}\n                    </mat-chip>\n                    <mat-chip color=\"warn\" selected>\n                        <mat-icon>timer</mat-icon>\n                        {{time_remaining}}\n                    </mat-chip>\n                </mat-chip-list>\n        </div>\n        <mat-progress-bar mode=\"indeterminate\" *ngIf=\"show_loader\"></mat-progress-bar>\n\n        <app-question class=\"exam-form\" *ngFor=\"let qn of questions\" [question]=\"qn\" ></app-question>\n        \n        <div fxLayout=\"row\" class=\"exam-footer\" *ngIf=\"!show_loader\">\n            <button mat-raised-button (click)=\"submitAnswer()\">Submit</button>\n        </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -1859,6 +1859,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _redux_exam_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./redux/exam.store */ "./src/app/exam/redux/exam.store.ts");
 /* harmony import */ var _exam_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./exam.service */ "./src/app/exam/exam.service.ts");
 /* harmony import */ var _ended_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ended.component */ "./src/app/exam/ended.component.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1868,6 +1869,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1902,6 +1904,7 @@ var ExamModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(EXAM_ROUTES),
                 _angular_material_card__WEBPACK_IMPORTED_MODULE_5__["MatCardModule"],
                 _angular_flex_layout__WEBPACK_IMPORTED_MODULE_6__["FlexLayoutModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_19__["MatToolbarModule"],
                 _angular_material_input__WEBPACK_IMPORTED_MODULE_9__["MatInputModule"],
                 _angular_material_progress_bar__WEBPACK_IMPORTED_MODULE_7__["MatProgressBarModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"],

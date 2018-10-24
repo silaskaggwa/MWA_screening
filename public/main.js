@@ -11,7 +11,6 @@ var map = {
 	"./admin/admin.module": [
 		"./src/app/admin/admin.module.ts",
 		"default~admin-admin-module~exam-exam-module~staff-staff-module",
-		"default~admin-admin-module~staff-staff-module",
 		"admin-admin-module"
 	],
 	"./exam/exam.module": [
@@ -22,7 +21,6 @@ var map = {
 	"./staff/staff.module": [
 		"./src/app/staff/staff.module.ts",
 		"default~admin-admin-module~exam-exam-module~staff-staff-module",
-		"default~admin-admin-module~staff-staff-module",
 		"staff-staff-module"
 	]
 };
@@ -66,7 +64,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <span>{{title}}</span>\n</mat-toolbar>\n<router-outlet></router-outlet>"
+module.exports = "<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -219,7 +217,7 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home',
-            template: "\n    <div>\n      <h1>\n        TAS Screening\n      </h1>\n    </div>\n  ",
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        TAS Screening\n      </h1>\n    </div>\n  ",
             styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
@@ -313,7 +311,7 @@ var P404Component = /** @class */ (function () {
     P404Component = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-p404',
-            template: "\n    <div>\n      <h1>\n        404 Not Found !\n      </h1>\n    </div>\n  ",
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        404 Not Found !\n      </h1>\n    </div>\n  ",
             styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
@@ -354,7 +352,7 @@ var UnauthorizedComponent = /** @class */ (function () {
     UnauthorizedComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-unauthorized',
-            template: "\n    <div>\n      <h1>\n        UNAUTHORIZED !\n      </h1>\n    </div>\n  ",
+            template: "\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <h2>TAS Screening</h2>\n        <span class=\"spacer\"></span><span class=\"spacer\"></span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <div>\n      <h1>\n        UNAUTHORIZED !\n      </h1>\n    </div>\n  ",
             styles: ['div {position: relative; padding: 20%;} h1 {text-align: center;}']
         }),
         __metadata("design:paramtypes", [])
