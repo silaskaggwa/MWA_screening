@@ -11,7 +11,9 @@
     padding-top: 10px;
     font-family: monospace;
     box-sizing: border-box;
-    color: #982b2b;
+    color: #982b2b !important;
+    border: 1px solid gray !important;
+    height: 450px !important;
 }
 .qn-answer {
     margin: 20px 10%;
@@ -22,8 +24,16 @@
     overflow: auto;
     position: fixed;
     bottom: 30px;
-    right: 30px;
     padding: 10px;
+}
+.fab-container.right {
+    right: 30px;
+}
+.fab-container.left {
+    left: 30px;
+}
+.fab-container .with-time{
+    font-size: 14px;
 }
 .fab-container button {
     display: block;

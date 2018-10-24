@@ -9,7 +9,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { QuestionsComponent } from './questions.component';
 import { ReviewComponent } from './review/review.component';
 import { ReviewService } from './review/review.service';
-import { ProgressComponent, SnackBarComponent } from './review/progress.component';
+import { ProgressComponent } from './review/progress.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatChipsModule, MatProgressBarModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -34,7 +34,7 @@ export const ADMIN_ROUTES = [
     
   ],
  // entryComponents: [AddUserComponent],
-  declarations: [AdminComponent,QuestionsComponent,ReviewComponent,ProgressComponent,SnackBarComponent],
+  declarations: [AdminComponent,QuestionsComponent,ReviewComponent,ProgressComponent],
   bootstrap: [AdminComponent],
   providers: [ReviewService]
 })

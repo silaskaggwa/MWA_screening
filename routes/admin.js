@@ -46,6 +46,16 @@ router.post('/questions/create', function (req, res) {
     active: req.body.active,
   }).then((info) => {
     console.log('savedQuestion>>', info)
+    return res.json({status: 'success'})
+  }).catch(err => { throw err });
+});
+
+router.get('/questions/all', function (req, res) {
+
+  console.log('body>>>> ', req.body);
+  ExamService.getAllQuestions().then((info) => {
+    console.log('savedQuestion>>', info)
+    return res.json(info);
   }).catch(err => { throw err });
 });
 

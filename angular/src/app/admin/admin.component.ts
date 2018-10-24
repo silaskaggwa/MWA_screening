@@ -17,13 +17,6 @@ export interface PeriodicElement {
   active: boolean;
 }
 
-const ELEMENT_DATA: User[] = [
-  { _id: '1', name: 'Tigist', email: "tigist@gmail.com", role: 'Admin', active: true },
-  { _id: '1', name: 'Silas', email: "tigist@gmail.com", role: 'Admin-Staff', active: true },
-  { _id: '1', name: 'Alem', email: "tigist@gmail.com", role: 'Admin', active: true },
-  { _id: '1', name: 'Tigist', email: "tigist@gmail.com", role: 'Admin', active: false },
-  { _id: '1', name: 'Alem', email: "tigist@gmail.com", role: 'Admin', active: false }
-];
 @Component({
   selector: 'admin',
   templateUrl: './admin.component.html',

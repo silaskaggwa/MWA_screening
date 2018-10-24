@@ -24,6 +24,18 @@ const packageQuestion = (data) => {
 const getInvitationById = (id) => Invitation.findById(id);
 
 const generateQuestions = () => {
+    return Question.aggregate([
+        {
+            $sample: {size: 3}
+        }
+    ])
+}
+
+const getAllQuestions = () => {
+    return Question.find({});
+}
+
+const generateQuestionsXjt = () => {
     return [
         {_id: 55, question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ', duration: 0},
         {_id: 56, question: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', duration: 0},
@@ -121,4 +133,4 @@ const getAnsweredInvitations = () => {
     ).sort({updated_at: 1});
 }
 
-module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations};
+module.exports = {createInvitation, endExam, setExamStatus, createQuestion, getInvitationById, startExam, packageQuestion, generateQuestions, addProgress, getAnsweredInvitations, generateQuestionsXjt, getAllQuestions};

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewService } from './review.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 interface Snapshot {
     text: string
@@ -26,24 +26,9 @@ interface Status {
 }
 
 @Component({
-    selector: 'snack-bar-component',
-    template: `
-        <span class="snack-bar-success">
-            Review successful !
-        </span>
-    `,
-    styles: [`
-        .snack-bar-success {
-        color: hotpink;
-        }
-    `],
-})
-export class SnackBarComponent {}
-
-@Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.css']
+  styleUrls: ['./progress.component.css'],
 })
 export class ProgressComponent implements OnInit {
 
@@ -72,9 +57,12 @@ export class ProgressComponent implements OnInit {
     }
 
     openSnackBar() {
-        this.snackBar.openFromComponent(SnackBarComponent, {
-            duration: 1500,
-        });
+        let config = new MatSnackBarConfig();
+        config.verticalPosition = 'bottom';
+        config.horizontalPosition = 'center';
+        config.duration = 2000;
+        //config.extraClasses = this.addExtraClass ? ['test'] : undefined;
+        this.snackBar.open('Review successful !', 'OK', config);
     }
 
     ngOnInit() {
